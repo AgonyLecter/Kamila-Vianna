@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kamila Vianna — Vá com o inglês que você tem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff3f7;--bg2:#ffe4ee;--ink:#2a0f2e;--mute:#6d4f70;--card:rgba(255,255,255,.7);--line:rgba(42,15,46,.12);--pink:#e0359a;--lilac:#9b7bff;--peach:#ffa77a;--free:#0f9d76;--freebg:#d6f8ec;
+--holo:linear-gradient(110deg,#e0359a,#9b7bff 45%,#ff9a6b);
+--d:'Bricolage Grotesque','Arial Black',system-ui,sans-serif;--b:'Figtree',system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a0a1f;--bg2:#2a1030;--ink:#fff0f6;--mute:#c9a8cc;--card:rgba(255,255,255,.07);--line:rgba(255,255,255,.14);--free:#7df0c9;--freebg:rgba(125,240,201,.14)}}
+:root[data-theme="dark"]{--bg:#1a0a1f;--bg2:#2a1030;--ink:#fff0f6;--mute:#c9a8cc;--card:rgba(255,255,255,.07);--line:rgba(255,255,255,.14);--free:#7df0c9;--freebg:rgba(125,240,201,.14)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--b);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+h1,h2,h3{font-family:var(--d);line-height:1.02;letter-spacing:-.03em;font-weight:800}
+h2{font-size:clamp(34px,9vw,56px);margin-bottom:12px}
+h3{font-size:21px;letter-spacing:-.02em}
+section{padding:72px 20px;max-width:960px;margin:auto;position:relative}
+.lead{color:var(--mute);max-width:46ch;margin-bottom:28px}
+.holo{background:var(--holo);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:sh 8s linear infinite alternate}
+@keyframes sh{to{background-position:100% 0}}
+/* nav */
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.logo{font:800 15px var(--d);letter-spacing:.02em;text-decoration:none;color:var(--ink)}
+.logo i{font-style:normal;color:var(--pink)}
+nav{display:none;gap:18px}nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
+.tools{display:flex;gap:8px;align-items:center}
+.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 13px;font:600 13px var(--b);cursor:pointer}
+.btn{border:0;border-radius:99px;padding:14px 24px;font:800 16px var(--d);color:#fff;background:var(--holo);background-size:200% 100%;cursor:pointer;box-shadow:0 8px 28px -8px var(--pink);transition:background-position .5s,transform .2s;text-decoration:none;display:inline-block}
+.btn:active{transform:scale(.96)}.btn:hover{background-position:100% 0}
+.btn.sm{padding:9px 15px;font-size:13px}
+.burger{width:38px;height:38px;padding:0;font-size:18px}
+#sheet{position:fixed;inset:0;z-index:70;background:var(--bg);display:none;flex-direction:column;justify-content:center;gap:6px;padding:30px}
+#sheet.on{display:flex}#sheet a{font:800 44px/1.15 var(--d);letter-spacing:-.03em;color:var(--ink);text-decoration:none}
+#sheet .x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px}
+@media(min-width:760px){nav{display:flex}.burger{display:none}}
+/* hero */
+#home{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-top:110px;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;z-index:-1;animation:fl 14s ease-in-out infinite alternate}
+.o1{width:300px;height:300px;background:var(--pink);right:-100px;top:60px}.o2{width:260px;height:260px;background:var(--lilac);left:-90px;bottom:80px;animation-delay:-5s}
+@keyframes fl{to{transform:translate(-30px,40px) scale(1.15)}}
+#home h1{font-size:clamp(46px,14.5vw,118px);text-transform:none;margin:14px 0 20px}
+.tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--card);padding:6px 14px;border-radius:99px;font-size:13px;font-weight:600;width:max-content}
+.bubbles{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 30px}
+.bub{perspective:600px;border:0;background:none;padding:0;cursor:pointer}
+.bub span{display:block;padding:11px 17px;border-radius:20px 20px 20px 4px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:15px;color:var(--ink);backdrop-filter:blur(8px);transition:transform .4s}
+.bub.on span{background:var(--holo);color:#fff;border-color:transparent;transform:rotate(-3deg) scale(1.05)}
+.bub:nth-child(even) span{border-radius:20px 20px 4px 20px}
+.hint{font-size:13px;color:var(--mute)}
+/* about */
+.ed{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+.ph{border-radius:26px;background:linear-gradient(160deg,var(--bg2),color-mix(in srgb,var(--lilac) 35%,var(--bg2)));border:1px dashed var(--line);display:flex;align-items:flex-end;padding:12px;font-size:12px;color:var(--mute);min-height:150px}
+.arch{border-radius:999px 999px 26px 26px;min-height:300px;grid-row:span 2}
+.txt{grid-column:1/-1;font-size:17px}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.stats b{font-weight:600;border:1px solid var(--line);border-radius:99px;padding:6px 13px;font-size:13px;background:var(--card)}
+@media(min-width:760px){.ed{grid-template-columns:1fr 1fr 1fr}.txt{grid-column:auto}}
+/* cards */
+.grid{display:grid;gap:14px}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:22px;backdrop-filter:blur(10px);position:relative;overflow:hidden}
+.ic{display:grid;place-items:center;width:56px;height:56px;border-radius:20px 20px 20px 6px;margin-bottom:12px;position:relative;background:linear-gradient(145deg,color-mix(in srgb,var(--pink) 14%,transparent),color-mix(in srgb,var(--lilac) 24%,transparent));border:1px solid var(--line)}
+.ic svg{width:32px;height:32px;fill:none;stroke:url(#g);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s}
+.ic::after{content:"✦";position:absolute;right:-5px;top:-8px;font-size:13px;color:var(--peach);animation:tw 3.2s ease-in-out infinite}
+@keyframes tw{50%{transform:scale(.4) rotate(90deg);opacity:.35}}
+.card:active .ic svg,.card.on .ic svg{transform:rotate(-8deg) scale(1.12)}
+.f{fill:url(#g);stroke:none}
+.soc{display:flex;gap:12px;justify-content:center;margin:16px 0}.soc a{width:50px;height:50px;border-radius:18px 18px 18px 6px;display:grid;place-items:center;border:1px solid var(--line);background:var(--card)}.soc svg{width:26px;height:26px;fill:none;stroke:url(#g);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.rg{display:block}
+.card p{color:var(--mute);font-size:15px;margin-top:6px}
+.big{font:800 clamp(30px,8vw,52px)/1 var(--d);letter-spacing:-.04em;margin:8px 0 22px}
+.aud button{all:unset;display:block;width:100%;cursor:pointer}
+.aud .card{transition:transform .3s,box-shadow .3s}
+.aud .card.on{box-shadow:0 0 0 2px var(--pink),0 18px 40px -18px var(--pink);transform:translateY(-3px)}
+.aud .more{max-height:0;overflow:hidden;transition:max-height .4s;font-size:14px;color:var(--ink)}
+.aud .on .more{max-height:90px;margin-top:10px}
+/* timeline */
+.tl{list-style:none;padding:0;margin:10px 0 30px;position:relative}
+.tl::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--holo)}
+.tl li{display:flex;gap:16px;padding:10px 0;position:relative}
+.tl .n{flex:none;width:40px;height:40px;border-radius:50%;background:var(--holo);color:#fff;font:800 17px/40px var(--d);text-align:center}
+.tl p{color:var(--mute);font-size:15px}.tl h3{margin-top:5px}
+/* pricing */
+.price{background:var(--ink);color:var(--bg);border-radius:34px;padding:30px 24px;position:relative;overflow:hidden;margin-bottom:14px}
+.price::after{content:"✦";position:absolute;right:20px;top:10px;font-size:90px;opacity:.12}
+.price .big{font-size:clamp(56px,17vw,100px);margin:6px 0}
+.price p{opacity:.8}
+.price s{opacity:0}
+/* booking */
+.days{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 14px;scrollbar-width:none}
+.day{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:10px 14px;text-align:center;font:600 13px/1.3 var(--b);cursor:pointer;min-width:66px}
+.day b{display:block;font:800 22px var(--d)}
+.day.on{background:var(--holo);color:#fff;border-color:transparent}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.slot{border-radius:18px;padding:14px 4px;text-align:center;font:800 18px var(--d);border:1.5px solid var(--free);color:var(--free);background:var(--freebg);cursor:pointer}
+.slot small{display:block;font:600 11px var(--b);margin-top:2px}
+.slot.bk{border-color:var(--line);color:var(--mute);background:transparent;text-decoration:line-through;cursor:not-allowed;opacity:.6}
+.slot.me{border-color:var(--pink);color:#fff;background:var(--holo)}
+.slot.sel{outline:3px solid var(--pink);outline-offset:2px}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mute);flex-wrap:wrap;margin-bottom:14px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;background:var(--free)}
+.legend i.b{background:var(--line)}.legend i.m{background:var(--pink)}
+#confirm{display:none;text-align:center}#confirm.on{display:block;animation:pop .35s}
+@keyframes pop{from{transform:scale(.94);opacity:0}}
+#confirm .big{margin:4px 0 4px}
+#confirm p{color:var(--mute);font-size:14px;margin-bottom:14px}
+.note{font-size:12px;color:var(--mute);margin-top:12px}
+/* modal */
+dialog{border:0;border-radius:28px;padding:26px 22px;width:min(92vw,420px);background:var(--bg);color:var(--ink);box-shadow:0 30px 80px -20px #000a}
+dialog::backdrop{background:rgba(26,10,31,.6);backdrop-filter:blur(6px)}
+label{display:block;font-weight:600;font-size:13px;margin:12px 0 5px}
+input,select{width:100%;padding:13px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:400 16px var(--b)}
+input:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,150%);background:var(--ink);color:var(--bg);padding:13px 20px;border-radius:99px;font-weight:600;z-index:100;transition:transform .4s;max-width:90vw;text-align:center}
+.toast.on{transform:translate(-50%,0)}
+footer{text-align:center;padding:40px 20px 60px;color:var(--mute);font-size:13px}
+.sp{position:fixed;pointer-events:none;z-index:90;color:var(--pink);font-size:14px;animation:sp .8s ease-out forwards}
+@keyframes sp{to{transform:translate(var(--x),var(--y)) scale(0) rotate(180deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="2" y1="2" x2="30" y2="30"><stop offset="0" style="stop-color:var(--pink)"/><stop offset=".55" style="stop-color:var(--lilac)"/><stop offset="1" style="stop-color:var(--peach)"/></linearGradient></defs><symbol id="i-chat" viewBox="0 0 32 32"><path d="M4 6h18a3 3 0 013 3v8a3 3 0 01-3 3h-9l-5 4v-4H4a3 3 0 01-3-3V9a3 3 0 013-3z"/><circle class="f" cx="8" cy="13" r="1.3"/><circle class="f" cx="13" cy="13" r="1.3"/><circle class="f" cx="18" cy="13" r="1.3"/><path d="M27 11a3 3 0 013 3v6a3 3 0 01-3 3v4l-4-3"/></symbol><symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 27S4 19.5 4 11.5A6 6 0 0116 9a6 6 0 0112 2.5C28 19.5 16 27 16 27z"/><path class="f" d="M25 2l1 2.5 2.5 1-2.5 1L25 9l-1-2.5-2.5-1 2.5-1z"/></symbol><symbol id="i-pin" viewBox="0 0 32 32"><path d="M16 29s9-9 9-16a9 9 0 10-18 0c0 7 9 16 9 16z"/><circle cx="16" cy="13" r="3.5"/><path d="M4 29h6M22 29h6" opacity=".5"/></symbol><symbol id="i-target" viewBox="0 0 32 32"><circle cx="15" cy="17" r="11"/><circle cx="15" cy="17" r="6"/><circle class="f" cx="15" cy="17" r="1.8"/><path d="M15 17L28 4M24 3v5h5"/></symbol><symbol id="i-book" viewBox="0 0 32 32"><path d="M3 6h9a4 4 0 014 4v17a3 3 0 00-3-3H3zM29 6h-9a4 4 0 00-4 4v17a3 3 0 013-3h10z"/><path class="f" d="M24 11l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol><symbol id="i-pen" viewBox="0 0 32 32"><path d="M5 27l1.5-6L21 6.5a2.5 2.5 0 013.5 0l1 1a2.5 2.5 0 010 3.5L11 25.5z"/><path d="M18 10l4 4M5 27l6-1.5"/><path d="M20 27l3 3 6-7"/></symbol><symbol id="i-layers" viewBox="0 0 32 32"><rect x="3" y="3" width="15" height="15" rx="5"/><rect x="14" y="14" width="15" height="15" rx="5"/><path class="f" d="M10 8l.8 1.7 1.7.8-1.7.8L10 13l-.8-1.7L7.5 10.5l1.7-.8z"/></symbol><symbol id="i-plane" viewBox="0 0 32 32"><path d="M29 3L3 13l9 4 4 10z"/><path d="M12 17L29 3"/><path d="M5 27c4-3 6-1 9-4" opacity=".6"/></symbol><symbol id="i-home" viewBox="0 0 32 32"><path d="M3 15L16 4l13 11"/><path d="M6 13v15h20V13"/><path d="M13 28v-8a3 3 0 016 0v8"/><circle class="f" cx="25" cy="6" r="1.6"/></symbol><symbol id="i-brief" viewBox="0 0 32 32"><rect x="3" y="10" width="26" height="18" rx="4"/><path d="M11 10V8a3 3 0 013-3h4a3 3 0 013 3v2M3 18h26"/><path class="f" d="M16 16l1 2-1 2-1-2z"/></symbol><symbol id="i-spark" viewBox="0 0 32 32"><path d="M16 3l3.5 9.5L29 16l-9.5 3.5L16 29l-3.5-9.5L3 16l9.5-3.5z"/><circle class="f" cx="26" cy="6" r="1.6"/><circle class="f" cx="6" cy="26" r="1.2"/></symbol><symbol id="i-gift" viewBox="0 0 32 32"><rect x="4" y="12" width="24" height="16" rx="3"/><path d="M16 12v16M4 19h24M16 12c-4 0-7-1-7-4s4-4 7 4c3-8 7-7 7-4s-3 4-7 4z"/></symbol><symbol id="i-globe" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4c5 6 5 18 0 24-5-6-5-18 0-24z"/><circle class="f" cx="25" cy="6" r="1.6"/></symbol><symbol id="i-euro" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="M21 11a7 7 0 100 10M9 14h9M9 18h9"/></symbol><symbol id="i-ig" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="8"/><circle cx="16" cy="16" r="5.5"/><circle class="f" cx="23" cy="9" r="1.5"/></symbol><symbol id="i-li" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="7"/><path d="M11 14v8M16 22v-8M16 17.5a4 4 0 018 0V22"/><circle class="f" cx="11" cy="10.5" r="1.4"/></symbol></svg>
+<header>
+  <a class="logo" href="#home">KAMILA <i>✦</i> VIANNA</a>
+  <nav>
+    <a href="#home" data-i="n_home"></a><a href="#about" data-i="n_about"></a><a href="#method" data-i="n_method"></a><a href="#classes" data-i="n_classes"></a><a href="#booking" data-i="n_booking"></a>
+  </nav>
+  <div class="tools">
+    <button class="pill" id="lang" aria-label="Language">PT | EN</button>
+    <button class="btn sm" data-open="signup" data-i="n_sign"></button>
+    <button class="pill burger" id="bg" aria-label="Menu">☰</button>
+  </div>
+</header>
+<div id="sheet">
+  <button class="pill x" id="cl">✕</button>
+  <a href="#home" data-i="n_home"></a><a href="#about" data-i="n_about"></a><a href="#method" data-i="n_method"></a><a href="#classes" data-i="n_classes"></a><a href="#booking" data-i="n_booking"></a>
+</div>
+
+<section id="home">
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <span class="tag">✦ <span data-i="tag"></span></span>
+  <h1 class="holo" data-i="h1"></h1>
+  <p class="lead" data-i="sub"></p>
+  <div class="bubbles" id="bubbles"></div>
+  <p class="hint" data-i="hint"></p>
+  <p style="margin-top:26px"><a class="btn" href="#booking" data-i="cta1"></a></p>
+</section>
+
+<section id="about">
+  <h2 data-i="a_t"></h2>
+  <p class="lead" data-i="a_l"></p>
+  <div class="ed">
+    <div class="ph arch" data-p="p1">Foto 1 · viagem</div>
+    <div class="ph" data-p="p2">Foto 2 · trabalho</div>
+    <div class="ph" data-p="p3">Foto 3 · vida fora</div>
+    <p class="txt" data-i="a_p1"></p>
+    <div class="ph" data-p="p4" style="min-height:200px">Foto 4 · autêntica</div>
+    <p class="txt" data-i="a_p2"></p>
+  </div>
+  <div class="stats" style="margin-top:20px"><b data-i="s1"></b><b data-i="s2"></b><b data-i="s3"></b><b data-i="s4"></b></div>
+</section>
+
+<section id="method">
+  <h2 data-i="m_t"></h2>
+  <p class="big holo" data-i="m_big"></p>
+  <p class="lead" data-i="m_l"></p>
+  <div class="grid" id="mg"></div>
+</section>
+
+<section id="classes">
+  <h2 data-i="c_t"></h2>
+  <p class="lead" data-i="c_l"></p>
+  <div class="grid aud" id="ag"></div>
+
+  <h2 style="margin-top:70px" data-i="h_t"></h2>
+  <ol class="tl" id="tl"></ol>
+  <a class="btn" href="#booking" data-i="cta2"></a>
+</section>
+
+<section id="pricing">
+  <h2 data-i="p_t"></h2>
+  <div class="price">
+    <p data-i="p_a"></p>
+    <p class="big" id="pp">€100</p>
+    <p data-i="p_b"></p>
+  </div>
+  <div class="grid">
+    <div class="card"><span class="ic"><svg><use href="#i-gift"/></svg></span><h3 data-i="p_free"></h3><p data-i="p_freed"></p></div>
+    <div class="card"><span class="ic"><svg><use href="#i-globe"/></svg></span><h3 data-i="p_tz"></h3><p data-i="p_tzd"></p></div>
+    <div class="card"><span class="ic"><svg><use href="#i-euro"/></svg></span><h3>Wise</h3><p data-i="p_wise"></p></div>
+  </div>
+</section>
+
+<section id="booking">
+  <h2 data-i="b_t"></h2>
+  <p class="lead" data-i="b_l"></p>
+  <div class="pill" style="display:inline-block;margin-bottom:16px">🇧🇷 <span data-i="b_tz"></span></div>
+  <div class="days" id="days"></div>
+  <div class="legend"><span><i></i><span data-i="lg1"></span></span><span><i class="b"></i><span data-i="lg2"></span></span><span><i class="m"></i><span data-i="lg3"></span></span></div>
+  <div class="slots" id="slots"></div>
+  <div class="card" id="confirm">
+    <p data-i="b_sel"></p>
+    <p class="big holo" id="cwhen"></p>
+    <p id="cwhen2"></p>
+    <button class="btn" id="cbtn" data-i="b_btn"></button>
+  </div>
+  <div id="mybk"></div>
+  <p class="note" data-i="b_note"></p>
+</section>
+
+<footer><div class="soc"><a href="https://www.instagram.com/kamilavianna__" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a><a href="https://www.linkedin.com/in/kamilabossovianna" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-li"/></svg></a></div>✦ Vá com o inglês que você tem ✦<br>© 2026 Kamila Vianna</footer>
+
+<dialog id="signup"><h3 id="r_t"></h3>
+  <div class="rg"><label data-i="r_n"></label><input id="rn" autocomplete="name"></div>
+  <label>Email</label><input id="re" type="email" autocomplete="email">
+  <label data-i="r_p"></label><input id="rp" type="password" autocomplete="current-password">
+  <div class="rg"><label data-i="r_w"></label><input id="rw" type="tel" autocomplete="tel"><label data-i="r_g"></label>
+  <select id="rg"><option value="travel" data-i="g1"></option><option value="abroad" data-i="g2"></option><option value="work" data-i="g3"></option><option value="conf" data-i="g4"></option></select></div>
+  <p style="margin-top:20px;display:flex;gap:10px"><button class="btn" id="rs"></button><button class="pill" id="rc" data-i="r_c"></button></p>
+  <p style="margin-top:14px"><button class="pill" id="sw"></button></p></dialog>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+let db,auth,collection,doc,getDoc,setDoc,onSnapshot,query,where,writeBatch,serverTimestamp,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,updateProfile,sendEmailVerification;
+const ADMIN_EMAIL='kamibossoviana@gmail.com',DEFAULTS={price:100,pkg:4,days:[1,2,3,4],hours:[15,16,17]};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let L='pt';
+const T={
+pt:{n_home:'Home',n_about:'Sobre',n_method:'Método',n_classes:'Aulas',n_booking:'Agendar',n_sign:'Cadastrar',
+tag:'Aulas de inglês online para brasileiros',h1:'Vá com o inglês que você tem.',
+sub:'Você não precisa de um inglês perfeito para viajar, aproveitar oportunidades, conhecer pessoas e construir uma vida internacional.',
+hint:'Toque nas frases: você já sabe mais do que imagina ✦',cta1:'Aula experimental grátis',
+a_t:'Oi, eu sou a Kamila.',a_l:'Professora, viajante e alguém que também já teve medo de falar.',
+a_p1:'[Aqui entra o seu texto autobiográfico: formação em Letras (Inglês), experiência como professora e quase três anos em uma multinacional.]',
+a_p2:'[Aqui entra o seu texto sobre morar fora, viajar e conversar com pessoas de vários países e culturas.]',
+s1:'Letras · Inglês',s2:'3 anos em multinacional',s3:'Vida no exterior',s4:'Viagens pelo mundo',
+m_t:'Meu método',m_big:'Menos medo. Mais conversação.',m_l:'Você usa o inglês que já tem e vai ganhando vocabulário, fluência e precisão no caminho.',
+c_t:'Para quem são as aulas?',c_l:'Toque no seu objetivo.',h_t:'Como funcionam as aulas',cta2:'Quero me cadastrar',
+p_t:'Valores',p_a:'Pacote de {pk} aulas de 60 minutos',p_b:'Equivale a €{pl} por aula · 1 aula por semana · valor final confirmado no lançamento',
+p_free:'Aula introdutória grátis',p_freed:'30 minutos para nos conhecermos e traçar seus objetivos.',
+p_tz:'Seu fuso, sem conta',p_tzd:'Os horários aparecem no horário de Brasília e se ajustam automaticamente.',
+p_wise:'Os pagamentos são feitos exclusivamente pela Wise. Você recebe as instruções depois da aula introdutória e do contrato.',
+b_t:'Agende sua aula',b_l:'Escolha um dia e um horário livre. Pronto.',b_tz:'Horário de Brasília (UTC−3)',
+lg1:'Livre',lg2:'Ocupado',lg3:'Seu horário',b_sel:'Sua aula introdutória grátis',b_btn:'Confirmar agendamento',
+b_note:'Exemplo de disponibilidade: dias da semana serão confirmados antes do lançamento. Aqui os horários são fictícios; no site real virão do Firebase.',
+r_t:'Crie sua conta',r_l:'Leva 1 minuto e já libera o agendamento.',r_n:'Nome',r_w:'WhatsApp',r_g:'Seu objetivo',r_b:'Criar conta',r_c:'Agora não',
+g1:'Inglês para viagem',g2:'Inglês para morar fora',g3:'Inglês para trabalho internacional',g4:'Inglês para ganhar confiança',
+ok_reg:'Conta criada! Agora é só escolher o horário ✦',ok_bk:'Aula agendada! Você receberá a confirmação por e-mail ✦',fill:'Preencha nome e e-mail.',
+bubs:[['Hello!','Olá!'],['Where is the station?','Onde fica a estação?'],['Nice to meet you','Prazer em te conhecer'],['I’d like a coffee, please','Quero um café, por favor'],['Can you help me?','Você pode me ajudar?']],
+m:[['chat','Conversação em primeiro lugar','Falar é o centro de todas as aulas.'],['heart','Confiança','Perder o medo de errar.'],['pin','Situações reais','O que você vai viver fora da sala de aula.'],['target','Aulas personalizadas','Adaptadas a seus objetivos, interesses e nível.'],['book','Vocabulário útil','Palavras ligadas ao que você quer fazer.'],['pen','Feedback construtivo','Correções e explicações para se comunicar melhor.'],['layers','Gramática quando precisa','Só quando ajuda você a se comunicar.']],
+a:[['plane','Inglês para viagem','Aeroportos, hotéis, restaurantes e transporte público com segurança.','Você aprende a se virar em qualquer situação do dia a dia da viagem.'],['home','Inglês para morar fora','Para quem vai se mudar ou já mora no exterior.','Moradia, serviços, novas amizades e a vida cotidiana.'],['brief','Inglês para trabalho internacional','Entrevistas, reuniões, apresentações e networking.','Para abrir portas profissionais fora do Brasil.'],['spark','Inglês para confiança','Já estudou, mas trava na hora de falar.','Confiança construída com conversa e prática.']],
+h:[['Cadastro','Preencha o formulário com contato, objetivos e disponibilidade.'],['Aula introdutória grátis','30 min para conhecer você, seus objetivos e seus desafios.'],['Plano personalizado','Uma proposta sob medida com temas, vocabulário e habilidades.'],['Contrato de serviço','Seis meses iniciais, enviado para assinatura eletrônica.'],['Início das aulas','Aulas semanais online após a confirmação do pagamento.']],
+wd:'pt-BR',fr:'Livre',bk:'Ocupado',me:'Seu'},
+en:{n_home:'Home',n_about:'About',n_method:'Method',n_classes:'Classes',n_booking:'Booking',n_sign:'Sign up',
+tag:'Online English classes for Brazilians',h1:'Go with the English you have.',
+sub:'You don’t need perfect English to travel, seize opportunities, meet people and build an international life.',
+hint:'Tap the phrases: you know more than you think ✦',cta1:'Free intro lesson',
+a_t:'Hi, I’m Kamila.',a_l:'Teacher, traveller, and someone who was once afraid to speak too.',
+a_p1:'[Your autobiographical text goes here: English Language and Literature degree, teaching experience, almost three years in a multinational.]',
+a_p2:'[Your text about living abroad, travelling and talking with people from many countries goes here.]',
+s1:'English Lang. & Lit.',s2:'3 yrs multinational',s3:'Lived abroad',s4:'Travelled the world',
+m_t:'My method',m_big:'Less fear. More conversation.',m_l:'You use the English you already have and grow vocabulary, fluency and accuracy along the way.',
+c_t:'Who are the classes for?',c_l:'Tap your goal.',h_t:'How the classes work',cta2:'Sign me up',
+p_t:'Pricing',p_a:'Package of {pk} 60-minute lessons',p_b:'That’s €{pl} per lesson · 1 lesson a week · final price confirmed at launch',
+p_free:'Free intro lesson',p_freed:'30 minutes to get to know each other and set your goals.',
+p_tz:'Your time zone, handled',p_tzd:'Times show in Brasília time and adjust automatically.',
+p_wise:'Payments are made exclusively through Wise. Instructions are sent after the intro lesson and agreement.',
+b_t:'Book your class',b_l:'Pick a day and a free time. Done.',b_tz:'Brasília time (UTC−3)',
+lg1:'Free',lg2:'Booked',lg3:'Yours',b_sel:'Your free intro lesson',b_btn:'Confirm booking',
+b_note:'Sample availability: weekdays will be confirmed before launch. Slots here are mock data; the live site will read them from Firebase.',
+r_t:'Create your account',r_l:'Takes a minute and unlocks booking.',r_n:'Name',r_w:'WhatsApp',r_g:'Your goal',r_b:'Create account',r_c:'Not now',
+g1:'English for travel',g2:'English for living abroad',g3:'English for international work',g4:'English for confidence',
+ok_reg:'Account created! Now pick a time ✦',ok_bk:'Class booked! A confirmation will arrive by email ✦',fill:'Please fill in name and email.',
+bubs:[['Hello!','Olá!'],['Where is the station?','Onde fica a estação?'],['Nice to meet you','Prazer em te conhecer'],['I’d like a coffee, please','Quero um café, por favor'],['Can you help me?','Você pode me ajudar?']],
+m:[['chat','Conversation first','Speaking is the heart of every class.'],['heart','Confidence','Get past the fear of mistakes.'],['pin','Real-life situations','What you will actually face outside the classroom.'],['target','Personalised lessons','Shaped around your goals, interests and level.'],['book','Practical vocabulary','Words tied to what you want to do.'],['pen','Constructive feedback','Corrections and explanations to communicate clearly.'],['layers','Grammar when needed','Only when it helps you communicate.']],
+a:[['plane','English for travel','Airports, hotels, restaurants and public transport with confidence.','You learn to handle any everyday travel situation.'],['home','English for living abroad','For people relocating or already living overseas.','Housing, services, new friendships and daily life.'],['brief','English for international work','Interviews, meetings, presentations and networking.','To open professional doors abroad.'],['spark','English for confidence','You studied before but freeze when speaking.','Confidence built through conversation and practice.']],
+h:[['Register','Fill in the form with contact details, goals and availability.'],['Free intro lesson','30 min to get to know you, your goals and your challenges.'],['Personalised plan','A tailored proposal of topics, vocabulary and skills.'],['Service agreement','Six-month initial term, sent for e-signature.'],['Classes begin','Weekly online lessons once payment is confirmed.']],
+wd:'en-GB',fr:'Free',bk:'Booked',me:'Yours'}};
+Object.assign(T.pt,{r_p:'Senha (mín. 6)',r_tl:'Entrar na sua conta',r_in:'Entrar',r_sw1:'Já tem conta? Entrar',r_sw2:'Novo por aqui? Cadastrar',out:'Sair',ok_in:'Bem-vinda de volta ✦',e_used:'Este e-mail já tem conta. Use Entrar.',e_weak:'A senha precisa de 6+ caracteres.',e_bad:'Não deu certo. Confira e-mail e senha.',e_slot:'Esse horário acabou de ser reservado. Escolha outro.',mine:'Suas aulas',intro:'Aula introdutória grátis (30 min)',lesson:'Aula de conversação (60 min)',free:'Grátis',b_note:'Os horários são atualizados em tempo real.',ok_reg:'Conta criada! Enviamos um e-mail de confirmação ✦'});
+Object.assign(T.en,{r_p:'Password (min. 6)',r_tl:'Log in',r_in:'Log in',r_sw1:'Have an account? Log in',r_sw2:'New here? Sign up',out:'Log out',ok_in:'Welcome back ✦',e_used:'This email already has an account. Use Log in.',e_weak:'Password needs 6+ characters.',e_bad:'That didn’t work. Check email and password.',e_slot:'That slot was just booked. Pick another.',mine:'Your classes',intro:'Free introductory lesson (30 min)',lesson:'Conversation lesson (60 min)',free:'Free',b_note:'Times update in real time.',ok_reg:'Account created! We sent a confirmation email ✦'});
+
+let S={...DEFAULTS},taken=new Set(),mybk=[],photos={},prof={},mode='reg',user=null,unsub=null,sel=null,day=0;
+const pad=n=>String(n).padStart(2,'0'),iso=d=>d.toISOString().slice(0,10),bang=h=>pad((h+10)%24)+':00';
+const fmt=(d,o)=>d.toLocaleDateString(T[L].wd,{...o,timeZone:'UTC'});
+function mkDays(){const a=[],b=new Date(new Date().toLocaleDateString('en-CA',{timeZone:'America/Sao_Paulo'})+'T12:00:00Z');for(let i=1;i<=28&&a.length<10;i++){const d=new Date(b);d.setUTCDate(b.getUTCDate()+i);if(S.days.includes(d.getUTCDay()))a.push(d)}return a}
+let days=mkDays();
+const money=p=>p?'€'+(+p.toFixed(2)):T[L].free;
+function render(){
+ const t=T[L],pl=+(S.price/S.pkg).toFixed(2);document.documentElement.lang=L==='pt'?'pt-BR':'en';
+ $$('[data-i]').forEach(e=>e.textContent=t[e.dataset.i].replace('{pl}',pl).replace('{pk}',S.pkg));
+ $('#pp').textContent='€'+S.price;
+ $$('[data-open=signup]').forEach(b=>b.textContent=user?(user.displayName||'✓').split(' ')[0]+' · '+t.out:t.n_sign);
+ const ic=n=>`<span class="ic"><svg><use href="#i-${n}"/></svg></span>`;
+ $('#bubbles').innerHTML=t.bubs.map((b,i)=>`<button class="bub" data-i2="${i}"><span>${b[0]}</span></button>`).join('');
+ $$('.bub').forEach(b=>b.onclick=()=>{const k=+b.dataset.i2,on=b.classList.toggle('on');b.firstChild.textContent=T[L].bubs[k][on?1:0];burst(b)});
+ $('#mg').innerHTML=t.m.map(m=>`<div class="card">${ic(m[0])}<h3>${m[1]}</h3><p>${m[2]}</p></div>`).join('');
+ $('#ag').innerHTML=t.a.map(a=>`<button><div class="card">${ic(a[0])}<h3>${a[1]}</h3><p>${a[2]}</p><div class="more">✦ ${a[3]}</div></div></button>`).join('');
+ $$('.aud button').forEach(b=>b.onclick=()=>{const c=b.firstChild,o=c.classList.contains('on');$$('.aud .card').forEach(x=>x.classList.remove('on'));if(!o){c.classList.add('on');burst(c)}});
+ $('#tl').innerHTML=t.h.map((h,i)=>`<li><span class="n">${i+1}</span><div><h3>${h[0]}</h3><p>${h[1]}</p></div></li>`).join('');
+ if(day>=days.length)day=0;
+ $('#days').innerHTML=days.map((d,i)=>`<button class="day ${i===day?'on':''}" data-d="${i}">${fmt(d,{weekday:'short'})}<b>${d.getUTCDate()}</b>${fmt(d,{month:'short'})}</button>`).join('');
+ $$('.day').forEach(b=>b.onclick=()=>{day=+b.dataset.d;sel=null;render()});
+ const d=days[day];
+ $('#slots').innerHTML=d?[...S.hours].sort((a,b)=>a-b).map(h=>{const id=iso(d)+'_'+h,m=mybk.some(b=>b.id===id),b=taken.has(id);return `<button class="slot ${m?'me':b?'bk':''} ${sel===h?'sel':''}" data-h="${h}" ${b&&!m?'disabled':''}>${h}:00<small>${m?t.me:b?t.bk:t.fr}</small></button>`}).join(''):'';
+ $$('.slot').forEach(b=>b.onclick=()=>{if(b.classList.contains('me'))return;sel=+b.dataset.h;render()});
+ $('#confirm').classList.toggle('on',sel!==null&&!!d);
+ if(sel!==null&&d){const first=!mybk.length;$('#cwhen').textContent=fmt(d,{weekday:'long',day:'numeric',month:'long'})+' · '+sel+':00';$('#cwhen2').textContent=(first?t.intro:t.lesson)+' · '+money(first?0:S.price/S.pkg)+' · BRT (UTC−3)'}
+ $('#mybk').innerHTML=mybk.length?`<h3 style="margin:22px 0 10px">${t.mine}</h3>`+mybk.map(b=>`<div class="card" style="margin-bottom:10px"><h3>${t[b.kind]}</h3><p>${fmt(new Date(b.date+'T12:00:00Z'),{weekday:'long',day:'numeric',month:'long'})} · ${b.hour}:00 BRT · ${money(b.price)}</p></div>`).join(''):'';
+ $('#r_t').textContent=mode==='reg'?t.r_t:t.r_tl;$('#rs').textContent=mode==='reg'?t.r_b:t.r_in;$('#sw').textContent=mode==='reg'?t.r_sw1:t.r_sw2;
+ $$('.rg').forEach(e=>e.style.display=mode==='reg'?'':'none');applyPh();
+}
+function applyPh(){$$('.ph[data-p]').forEach(e=>{const u=photos[e.dataset.p];e.style.cssText=u?`background:url(${u}) center/cover;color:transparent;border-style:solid`:''})}
+function burst(el){const r=el.getBoundingClientRect();for(let i=0;i<10;i++)spark(r.left+r.width/2,r.top+r.height/2,40)}
+function spark(x,y,spread=30){const s=document.createElement('span');s.className='sp';s.textContent=['✦','✧','✨'][Math.random()*3|0];s.style.left=x+'px';s.style.top=y+'px';s.style.setProperty('--x',(Math.random()-.5)*spread*3+'px');s.style.setProperty('--y',(Math.random()*-1.2-.2)*spread*2+'px');s.style.color=['#e0359a','#9b7bff','#ffa77a'][Math.random()*3|0];document.body.appendChild(s);setTimeout(()=>s.remove(),850)}
+let last=0;addEventListener('pointermove',e=>{const n=Date.now();if(n-last>70){last=n;spark(e.clientX,e.clientY,14)}},{passive:true});
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3200)}
+// ---- e-mails (need the "Trigger Email from Firestore" extension, collection "mail") ----
+const mail=(b,adm)=>({to:[adm?ADMIN_EMAIL:b.email],message:{subject:adm?`Nova aula: ${b.name} · ${b.date} ${b.hour}:00`:'Aula confirmada ✦ Kamila Vianna',html:`<h2>${adm?'Nova aula agendada':'Sua aula está confirmada!'}</h2><p><b>${b.service}</b><br>Data: ${b.date}<br>Hora: ${b.hour}:00 Brasília (${bang(b.hour)} Bangkok)<br>Valor: ${b.price?'€'+b.price:'Grátis'}</p>${adm?`<p>Cliente: ${b.name}<br>E-mail: ${b.email}<br>WhatsApp: ${b.whatsapp||'-'}</p>`:'<p>Até já! — Kamila</p>'}`}});
+async function book(){
+ const u=auth&&auth.currentUser,d=days[day];if(!d||sel===null||(auth&&!u))return;
+ const id=iso(d)+'_'+sel,first=!mybk.length,k=first?'intro':'lesson';
+ if(!auth){mybk.push({id,kind:k,date:iso(d),hour:sel,price:first?0:+(S.price/S.pkg).toFixed(2)});burst($('#cbtn'));toast(T[L].ok_bk+' (demo)');sel=null;render();return}
+ const b={uid:u.uid,name:u.displayName||'',email:u.email,whatsapp:prof.whatsapp||'',date:iso(d),hour:sel,tz:'America/Sao_Paulo',kind:k,service:T.en[k],price:first?0:+(S.price/S.pkg).toFixed(2),created:serverTimestamp()};
+ try{if((await getDoc(doc(db,'slots',id))).exists()){toast(T[L].e_slot);return}
+  const w=writeBatch(db);w.set(doc(db,'slots',id),{taken:true});w.set(doc(db,'bookings',id),b);w.set(doc(collection(db,'mail')),mail(b,false));w.set(doc(collection(db,'mail')),mail(b,true));await w.commit();
+  burst($('#cbtn'));toast(T[L].ok_bk);sel=null;render()}catch(e){toast(T[L].e_bad)}}
+// ---- Firebase is loaded AFTER the page is drawn, so the site never goes blank ----
+async function initFB(){try{
+ const c=await import('./firebase-config.js');db=c.db;auth=c.auth;
+ ({collection,doc,getDoc,setDoc,onSnapshot,query,where,writeBatch,serverTimestamp}=await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js'));
+ ({createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,updateProfile,sendEmailVerification}=await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'));
+onSnapshot(doc(db,'settings','site'),s=>{if(s.exists())S={...DEFAULTS,...s.data()};days=mkDays();render()});
+onSnapshot(collection(db,'slots'),s=>{taken=new Set(s.docs.map(d=>d.id));render()});
+onSnapshot(collection(db,'photos'),s=>{photos={};s.docs.forEach(d=>photos[d.id]=d.data().data);applyPh()});
+onAuthStateChanged(auth,async u=>{user=u;unsub&&unsub();mybk=[];prof={};
+ if(u){try{prof=(await getDoc(doc(db,'users',u.uid))).data()||{}}catch(e){}
+  unsub=onSnapshot(query(collection(db,'bookings'),where('uid','==',u.uid)),s=>{mybk=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.id.localeCompare(b.id));render()})}
+ render()});
+}catch(e){console.warn('Firebase offline: demo mode',e);auth=null}}
+// ---- ui ----
+$('#lang').onclick=()=>{L=L==='pt'?'en':'pt';render()};
+$('#bg').onclick=()=>$('#sheet').classList.add('on');$('#cl').onclick=()=>$('#sheet').classList.remove('on');
+$$('#sheet a').forEach(a=>a.onclick=()=>$('#sheet').classList.remove('on'));
+$$('[data-open=signup]').forEach(b=>b.onclick=()=>user&&auth?signOut(auth):$('#signup').showModal());
+$('#rc').onclick=()=>$('#signup').close();$('#sw').onclick=()=>{mode=mode==='reg'?'in':'reg';render()};
+$('#rs').onclick=async()=>{const t=T[L],em=$('#re').value.trim(),pw=$('#rp').value,n=$('#rn').value.trim();
+ if(!auth){$('#signup').close();return toast('Demo: Firebase offline')}
+ if(!em.includes('@')||(mode==='reg'&&!n))return toast(t.fill);
+ try{if(mode==='reg'){const c=await createUserWithEmailAndPassword(auth,em,pw);prof={whatsapp:$('#rw').value.trim()};
+   await updateProfile(c.user,{displayName:n});await setDoc(doc(db,'users',c.user.uid),{name:n,email:em,whatsapp:prof.whatsapp,goal:$('#rg').value,created:serverTimestamp()});
+   sendEmailVerification(c.user).catch(()=>{});toast(t.ok_reg)}
+  else{await signInWithEmailAndPassword(auth,em,pw);toast(t.ok_in)}
+  $('#signup').close();if(sel!==null)setTimeout(book,700)}
+ catch(e){toast(e.code==='auth/email-already-in-use'?t.e_used:e.code==='auth/weak-password'?t.e_weak:t.e_bad)}};
+$('#cbtn').onclick=()=>(!auth||auth.currentUser)?book():$('#signup').showModal();
+render();initFB();
+</script>
+</body>
+</html>
