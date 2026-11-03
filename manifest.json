@@ -1,0 +1,24 @@
+{
+  "name": "Kamila Vianna \u00b7 V\u00e1 com o ingl\u00eas que voc\u00ea tem",
+  "short_name": "Kamila",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1a0a1f",
+  "theme_color": "#e0359a",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
