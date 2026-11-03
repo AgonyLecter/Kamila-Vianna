@@ -11,11 +11,13 @@ h1,h2{font-family:'Bricolage Grotesque','Arial Black',sans-serif;letter-spacing:
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.st{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px}.st b{display:block;font:800 30px 'Bricolage Grotesque',sans-serif}.st span{font-size:12px;color:var(--mute)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;margin-bottom:10px}.card small{color:var(--mute)}
 .row{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 13px;font:600 14px Figtree;cursor:pointer}.chip.on{background:var(--holo);color:#fff;border-color:transparent}
-input[type=number]{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:16px Figtree}
+input[type=text],input[type=number],input[type=date],input[type=email],input[type=password]{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:16px Figtree}
 .btn{border:0;border-radius:99px;padding:12px 22px;font:800 15px 'Bricolage Grotesque',sans-serif;color:#fff;background:var(--holo);cursor:pointer;margin-top:12px}.btn.g{background:none;color:var(--pink);border:1px solid var(--pink);padding:7px 14px;font-size:13px;margin:8px 8px 0 0}
 a{color:var(--pink)}.ph{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ph .th{aspect-ratio:4/3;border-radius:16px;background:var(--card) center/cover;border:1px dashed var(--line);display:grid;place-items:center;color:var(--mute);font-size:13px}
+#gate{position:fixed;inset:0;z-index:99;background:var(--bg);display:grid;place-items:center;padding:24px}#gate[hidden]{display:none}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:99px;opacity:0;transition:.3s}.toast.on{opacity:1}
 </style></head><body>
+<div id="gate" hidden><div class="card" style="width:min(92vw,380px)"><h2 style="margin-top:0">Entrar no painel</h2><p style="margin:10px 0 4px">E-mail</p><input id="ge" type="email" autocomplete="email"><p style="margin:10px 0 4px">Senha</p><input id="gp" type="password" autocomplete="current-password"><button class="btn" id="gs">Entrar</button><p id="gm" style="margin-top:10px;color:var(--pink);font-size:14px"></p></div></div>
 <h1>Painel da Kamila ✦</h1>
 <p class="warn">Modo de teste: sem login. Antes de publicar, adicionar login de admin e fechar as regras do Firestore.</p>
 <p class="warn" id="err" hidden>Firebase não carregou. Abra este painel pelo endereço publicado (GitHub Pages), com internet. Abrir o arquivo direto do celular não funciona.</p>
@@ -29,39 +31,49 @@ a{color:var(--pink)}.ph{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ph 
 <h2>Disponibilidade</h2>
 <div class="card"><p><b>Dias da semana</b></p><div class="row" id="wd" style="margin:8px 0 16px"></div>
 <p><b>Horários</b> <small>em Brasília · entre parênteses, Bangkok</small></p><div class="row" id="hr" style="margin-top:8px"></div>
+<p style="margin-top:16px"><b>Dias bloqueados</b> <small>férias, folgas</small></p><div class="row" style="margin-top:8px"><input type="date" id="bd" style="flex:1"><button class="btn g" id="ba" style="margin:0">Bloquear</button></div><div class="row" id="bl" style="margin-top:8px"></div>
 <button class="btn" id="save">Salvar preço e disponibilidade</button></div>
 
 <h2>Fotos do site</h2><p style="color:var(--mute);font-size:14px;margin-bottom:10px">Toque em “Escolher foto” para trocar cada imagem da seção About.</p><div class="ph" id="ph"></div>
 <div class="toast" id="t"></div>
 
 <script type="module">
-let db,collection,doc,onSnapshot,setDoc,deleteDoc,writeBatch,DEFAULTS={price:100,pkg:4,days:[1,2,3,4],hours:[15,16,17]};
-try{db=(await import('./firebase-config.js')).db;({collection,doc,onSnapshot,setDoc,deleteDoc,writeBatch}=await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js'))}
-catch(e){console.warn(e);document.querySelector('#err').hidden=false;collection=doc=()=>0;onSnapshot=()=>{};setDoc=deleteDoc=async()=>alert('Firebase não carregou');writeBatch=()=>({})}
+let db,ref,onValue,set,remove,update,DEFAULTS={price:100,pkg:4,days:[1,2,3,4],hours:[15,16,17],blocked:[]};
+try{const c=await import('./firebase-config.js');db=c.db;({ref,onValue,set,remove,update}=await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js'));
+ if(c.REQUIRE_ADMIN_LOGIN){const A=await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'),q=x=>document.querySelector(x);q('#gate').hidden=false;
+  await new Promise(res=>{A.onAuthStateChanged(c.auth,u=>{if(u&&u.email===c.ADMIN_EMAIL){q('#gate').hidden=true;res()}else if(u){q('#gm').textContent='Esta conta não é a da administradora.';A.signOut(c.auth)}});
+  q('#gs').onclick=async()=>{try{await A.signInWithEmailAndPassword(c.auth,q('#ge').value.trim(),q('#gp').value)}catch(e){q('#gm').textContent='E-mail ou senha incorretos.'}}})}}
+catch(e){console.warn(e);document.querySelector('#err').hidden=false;ref=()=>0;onValue=()=>{};set=remove=update=async()=>alert('Firebase não carregou')}
 const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0');
+let seen=null;
+const mm=b=>'mailto:'+b.email+'?subject='+encodeURIComponent('Sua aula com a Kamila · '+b.date+' '+b.hour+':00')+'&body='+encodeURIComponent('Olá '+b.name+'! Sua aula está confirmada.\n\n'+b.service+'\nData: '+b.date+'\nHora: '+b.hour+':00 (Brasília) · '+pad((b.hour+10)%24)+':00 Bangkok\nValor: '+(b.price?'€'+b.price:'Grátis')+'\n\nAté já! Kamila');
 const toast=m=>{const t=$('#t');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2400)};
 let S={...DEFAULTS};const WD=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-onSnapshot(collection(db,'users'),s=>$('#nu').textContent=s.size);
-onSnapshot(collection(db,'bookings'),s=>{const a=s.docs.map(d=>({id:d.id,...d.data()})).sort((x,y)=>x.id.localeCompare(y.id));
- $('#nb').textContent=a.length;$('#rv').textContent='€'+a.reduce((n,b)=>n+(b.price||0),0);
- $('#bk').innerHTML=a.map(b=>`<div class="card"><b>${b.service}</b><br>${new Date(b.date+'T12:00:00Z').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'})} · ${b.hour}:00 Brasília (${pad((b.hour+10)%24)}:00 Bangkok)<br>€${b.price} <br><small>${b.name} · <a href="mailto:${b.email}">${b.email}</a>${b.whatsapp?` · <a href="https://wa.me/${b.whatsapp.replace(/\D/g,'')}">WhatsApp</a>`:''}</small><br><button class="btn g" data-c="${b.id}">Cancelar aula</button></div>`).join('')||'<p>Nenhum agendamento ainda.</p>';
- document.querySelectorAll('[data-c]').forEach(b=>b.onclick=async()=>{if(!confirm('Cancelar esta aula e liberar o horário?'))return;const w=writeBatch(db);w.delete(doc(db,'bookings',b.dataset.c));w.delete(doc(db,'slots',b.dataset.c));await w.commit();toast('Aula cancelada')})});
-function drawS(){$('#price').value=S.price;$('#pkg').value=S.pkg;per();
+onValue(ref(db,'kamila/users'),s=>$('#nu').textContent=s.numChildren());
+onValue(ref(db,'kamila/bookings'),s=>{const v=s.val()||{};const a=Object.keys(v).map(id=>({id,...v[id]})).sort((x,y)=>x.id.localeCompare(y.id));
+ $('#nb').textContent=a.length;const ids=new Set(a.map(x=>x.id));if(seen){const n=a.filter(x=>!seen.has(x.id));if(n.length){toast('Nova aula: '+n[0].name+' · '+n[0].date+' '+n[0].hour+':00 ✦');document.title='('+n.length+') Nova aula · Admin';navigator.vibrate&&navigator.vibrate(200)}}seen=ids;$('#rv').textContent='€'+a.reduce((n,b)=>n+(b.price||0),0);
+ $('#bk').innerHTML=a.map(b=>`<div class="card"><b>${b.service}</b><br>${new Date(b.date+'T12:00:00Z').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'})} · ${b.hour}:00 Brasília (${pad((b.hour+10)%24)}:00 Bangkok)<br>€${b.price} <br><small>${b.name} · <a href="mailto:${b.email}">${b.email}</a>${b.whatsapp?` · <a href="https://wa.me/${b.whatsapp.replace(/\D/g,'')}">WhatsApp</a>`:''}</small><br><a class="btn g" style="display:inline-block;text-decoration:none" href="${mm(b)}">✉ E-mail para a aluna</a><button class="btn g" data-c="${b.id}" data-u="${b.uid}">Cancelar aula</button></div>`).join('')||'<p>Nenhum agendamento ainda.</p>';
+ document.querySelectorAll('[data-c]').forEach(b=>b.onclick=async()=>{if(!confirm('Cancelar esta aula e liberar o horário?'))return;await update(ref(db),{['kamila/bookings/'+b.dataset.c]:null,['kamila/slots/'+b.dataset.c]:null,['kamila/userBookings/'+b.dataset.u+'/'+b.dataset.c]:null});toast('Aula cancelada')})});
+function drawS(){S.blocked=S.blocked||[];$('#price').value=S.price;$('#pkg').value=S.pkg;per();
  $('#wd').innerHTML=WD.map((n,i)=>`<button class="chip ${S.days.includes(i)?'on':''}" data-d="${i}">${n}</button>`).join('');
  $('#hr').innerHTML=Array.from({length:17},(_,i)=>i+6).map(h=>`<button class="chip ${S.hours.includes(h)?'on':''}" data-h="${h}">${h}:00 (${pad((h+10)%24)}h)</button>`).join('');
- document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{tog(S.days,+b.dataset.d)});document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{tog(S.hours,+b.dataset.h)})}
+ document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{tog(S.days,+b.dataset.d)});document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{tog(S.hours,+b.dataset.h)});
+ $('#bl').innerHTML=S.blocked.map(d=>`<button class="chip on" data-x="${d}">${d} ✕</button>`).join('');document.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{S.blocked=S.blocked.filter(x=>x!==b.dataset.x);drawS()})}
 const tog=(a,v)=>{const i=a.indexOf(v);i<0?a.push(v):a.splice(i,1);drawS()};
 const per=()=>$('#per').textContent='= €'+(+(S.price/S.pkg).toFixed(2))+' por aula';
-onSnapshot(doc(db,'settings','site'),s=>{if(s.exists())S={...DEFAULTS,...s.data()};drawS()});
+onValue(ref(db,'kamila/settings/site'),s=>{if(s.exists())S={...DEFAULTS,...s.val()};drawS()});
 $('#price').oninput=e=>{S.price=+e.target.value;per()};$('#pkg').oninput=e=>{S.pkg=Math.max(1,+e.target.value);per()};
-$('#save').onclick=async()=>{await setDoc(doc(db,'settings','site'),{price:S.price,pkg:S.pkg,days:S.days.sort(),hours:S.hours.sort((a,b)=>a-b)});toast('Salvo ✦')};
+
+$('#ba').onclick=()=>{const v=$('#bd').value;if(v&&!S.blocked.includes(v)){S.blocked.push(v);S.blocked.sort();drawS()}};
+$('#save').onclick=async()=>{await set(ref(db,'kamila/settings/site'),{price:S.price,pkg:S.pkg,days:S.days.sort(),hours:S.hours.sort((a,b)=>a-b),blocked:S.blocked});toast('Salvo ✦')};
 // photos: resized to JPEG and stored in Firestore (no Storage plan needed)
 const P={};const labels={p1:'Viagem',p2:'Trabalho',p3:'Vida no exterior',p4:'Autêntica'};
 function drawP(){$('#ph').innerHTML=Object.keys(labels).map(k=>`<div><div class="th" style="${P[k]?`background-image:url(${P[k]})`:''}">${P[k]?'':labels[k]}</div><input type="file" accept="image/*" id="f${k}" hidden><button class="btn g" data-u="${k}">Escolher foto</button>${P[k]?`<button class="btn g" data-r="${k}">Remover</button>`:''}</div>`).join('');
  document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>$('#f'+b.dataset.u).click());
- document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>deleteDoc(doc(db,'photos',b.dataset.r)));
+ document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>remove(ref(db,'kamila/photos/'+b.dataset.r)));
  Object.keys(labels).forEach(k=>$('#f'+k).onchange=e=>shrink(e.target.files[0],k))}
-function shrink(f,k){if(!f)return;const im=new Image();im.onload=async()=>{const r=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*r;c.height=im.height*r;c.getContext('2d').drawImage(im,0,0,c.width,c.height);await setDoc(doc(db,'photos',k),{data:c.toDataURL('image/jpeg',.72)});toast('Foto atualizada ✦')};im.src=URL.createObjectURL(f)}
-onSnapshot(collection(db,'photos'),s=>{Object.keys(labels).forEach(k=>delete P[k]);s.docs.forEach(d=>P[d.id]=d.data().data);drawP()});
+function shrink(f,k){if(!f)return;const im=new Image();im.onload=async()=>{const r=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*r;c.height=im.height*r;c.getContext('2d').drawImage(im,0,0,c.width,c.height);await set(ref(db,'kamila/photos/'+k),{data:c.toDataURL('image/jpeg',.72)});toast('Foto atualizada ✦')};im.src=URL.createObjectURL(f)}
+onValue(ref(db,'kamila/photos'),s=>{Object.keys(labels).forEach(k=>delete P[k]);const v=s.val()||{};for(const k in v)P[k]=v[k].data;drawP()});
 drawS();drawP();
-</script></body></html>
+</script></body>
+</html>
