@@ -55,7 +55,7 @@ nav{display:none;gap:18px}nav a{color:var(--ink);text-decoration:none;font-weigh
 /* frases 3D */
 .bubbles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 12px;perspective:900px}
 @media(min-width:640px){.bubbles{grid-template-columns:repeat(3,1fr)}}
-.bub{border:0;background:none;padding:0;cursor:pointer;height:76px;perspective:700px;animation:bob 3.8s ease-in-out infinite;animation-delay:calc(var(--i)*-.6s);-webkit-tap-highlight-color:transparent}
+.bub{display:block;text-decoration:none;border:0;background:none;padding:0;cursor:pointer;height:88px;perspective:700px;animation:bob 3.8s ease-in-out infinite;animation-delay:calc(var(--i)*-.6s);-webkit-tap-highlight-color:transparent}
 @keyframes bob{50%{transform:translateY(-7px)}}
 .tl3,.bub .in{display:block;width:100%;height:100%;transform-style:preserve-3d}
 .tl3{transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .2s}
@@ -154,6 +154,10 @@ footer{text-align:center;padding:40px 20px 60px;color:var(--mute);font-size:13px
 .slot.sk{pointer-events:none;color:transparent;border-color:var(--line);background:linear-gradient(90deg,var(--card),var(--line),var(--card));background-size:200% 100%;animation:sk 1.2s linear infinite}
 .slot.sk small{color:transparent}
 @keyframes sk{to{background-position:-200% 0}}
+.bub .f{align-content:center;gap:5px}
+.bub .f svg{width:24px;height:24px;fill:none;stroke:url(#g);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.bub .f b{font:700 15px var(--b)}
+.price .brl{font:600 18px var(--b);opacity:.85;margin:-4px 0 14px}
 </style>
 </head>
 <body>
@@ -182,7 +186,6 @@ footer{text-align:center;padding:40px 20px 60px;color:var(--mute);font-size:13px
   <p class="lead" data-i="sub"></p>
   <div class="bubbles" id="bubbles"></div>
   <p class="hint" data-i="hint"></p>
-  <p class="cnt" style="margin-top:10px"><span id="cnt"></span> <button class="pill" id="shuf"></button></p>
   <p style="margin-top:26px"><a class="btn" href="#booking" data-i="cta1"></a></p>
 </section>
 
@@ -212,7 +215,7 @@ footer{text-align:center;padding:40px 20px 60px;color:var(--mute);font-size:13px
   <p class="lead" data-i="c_l"></p>
   <div class="grid aud" id="ag"></div>
 
-  <h2 style="margin-top:70px" data-i="h_t"></h2>
+  <h2 id="how" style="margin-top:70px" data-i="h_t"></h2>
   <ol class="tl" id="tl"></ol>
   <a class="btn" href="#booking" data-i="cta2"></a>
 </section>
@@ -222,11 +225,11 @@ footer{text-align:center;padding:40px 20px 60px;color:var(--mute);font-size:13px
   <div class="price">
     <p data-i="p_a"></p>
     <p class="big" id="pp">€100</p>
+    <p class="brl" id="pbrl"></p>
     <p data-i="p_b"></p>
   </div>
   <div class="grid">
     <div class="card"><span class="ic"><svg><use href="#i-gift"/></svg></span><h3 data-i="p_free"></h3><p data-i="p_freed"></p></div>
-    <div class="card"><span class="ic"><svg><use href="#i-globe"/></svg></span><h3 data-i="p_tz"></h3><p data-i="p_tzd"></p></div>
     <div class="card"><span class="ic"><svg><use href="#i-euro"/></svg></span><h3>Wise</h3><p data-i="p_wise"></p></div>
   </div>
 </section>
@@ -266,13 +269,13 @@ footer{text-align:center;padding:40px 20px 60px;color:var(--mute);font-size:13px
 
 <script type="module">
 let db,auth,ref,onValue,set,get,update,push,query,orderByChild,equalTo,serverTimestamp,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,updateProfile,sendEmailVerification,sendPasswordResetEmail;
-const ADMIN_EMAIL='kamibossoviana@gmail.com',DEFAULTS={price:100,pkg:4,days:[1,2,3,4],hours:[15,16,17]};
+const ADMIN_EMAIL='kamibossoviana@gmail.com',DEFAULTS={price:100,pkg:4,brl:650,days:[1,2,3,4],hours:[15,16,17]};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let L=(()=>{try{return localStorage.getItem('kv_lang')==='en'?'en':'pt'}catch(e){return'pt'}})();
 const T={
 pt:{n_home:'Home',n_about:'Sobre',n_method:'Método',n_classes:'Aulas',n_booking:'Agendar',n_sign:'Cadastrar',
 tag:'Aulas de inglês online para brasileiros',h1:'Vá com o inglês que você tem.',
 sub:'Você não precisa de um inglês perfeito para viajar, aproveitar oportunidades, conhecer pessoas e construir uma vida internacional.',
-hint:'Toque nas frases: você já sabe mais do que imagina ✦',cta1:'Aula experimental grátis',
+hint:'Toque e explore o site ✦',cta1:'Aula experimental grátis',
 a_t:'Oi, eu sou a Kamila.',a_l:'Professora, viajante e alguém que também já teve medo de falar.',
 a_p1:'[Aqui entra o seu texto autobiográfico: formação em Letras (Inglês), experiência como professora e quase três anos em uma multinacional.]',
 a_p2:'[Aqui entra o seu texto sobre morar fora, viajar e conversar com pessoas de vários países e culturas.]',
@@ -297,7 +300,7 @@ wd:'pt-BR',fr:'Livre',bk:'Ocupado',me:'Seu'},
 en:{n_home:'Home',n_about:'About',n_method:'Method',n_classes:'Classes',n_booking:'Booking',n_sign:'Sign up',
 tag:'Online English classes for Brazilians',h1:'Go with the English you have.',
 sub:'You don’t need perfect English to travel, seize opportunities, meet people and build an international life.',
-hint:'Tap the phrases: you know more than you think ✦',cta1:'Free intro lesson',
+hint:'Tap to explore the site ✦',cta1:'Free intro lesson',
 a_t:'Hi, I’m Kamila.',a_l:'Teacher, traveller, and someone who was once afraid to speak too.',
 a_p1:'[Your autobiographical text goes here: English Language and Literature degree, teaching experience, almost three years in a multinational.]',
 a_p2:'[Your text about living abroad, travelling and talking with people from many countries goes here.]',
@@ -319,29 +322,30 @@ m:[['chat','Conversation first','Speaking is the heart of every class.'],['heart
 a:[['plane','English for travel','Airports, hotels, restaurants and public transport with confidence.','You learn to handle any everyday travel situation.'],['home','English for living abroad','For people relocating or already living overseas.','Housing, services, new friendships and daily life.'],['brief','English for international work','Interviews, meetings, presentations and networking.','To open professional doors abroad.'],['spark','English for confidence','You studied before but freeze when speaking.','Confidence built through conversation and practice.']],
 h:[['Register','Fill in the form with contact details, goals and availability.'],['Free intro lesson','30 min to get to know you, your goals and your challenges.'],['Personalised plan','A tailored proposal of topics, vocabulary and skills.'],['Service agreement','Six-month initial term, sent for e-signature.'],['Classes begin','Weekly online lessons once payment is confirmed.']],
 wd:'en-GB',fr:'Free',bk:'Booked',me:'Yours'}};
-Object.assign(T.pt,{lock_t:'Entre para reservar',lock_d:'Qualquer pessoa pode ver os horários. Para reservar, crie sua conta grátis ou entre.',lock_r:'Criar conta grátis',lock_i:'Já tenho conta',st1:'Escolha o dia',st2:'Escolha o horário',st3:'Confirme sua aula',tab_r:'Cadastrar',tab_i:'Entrar',r_sub:'Leva 1 minuto. Usamos seus dados só para agendar as aulas.',r_sub2:'Que bom te ver de novo!',ok_n:'Sua reserva já está salva. Para avisar a Kamila agora, envie o e-mail abaixo.',none:'Sem horários disponíveis por enquanto. Volte em breve!',r_w:'WhatsApp (opcional)',cnt:'Você já sabe {n} frases ✦',shuf:'↻ Mais frases',ok_t:'Aula agendada ✦',ok_c:'Fechar',sendm:'✉ Avisar a Kamila por e-mail',ok_bk:'Aula agendada! Ela já aparece em “Suas aulas” ✦',r_fp:'Esqueci a senha',ok_fp:'Se o e-mail tiver conta, enviamos o link para criar uma nova senha ✦',r_p:'Senha (mín. 6)',r_tl:'Entrar na sua conta',r_in:'Entrar',r_sw1:'Já tem conta? Entrar',r_sw2:'Novo por aqui? Cadastrar',out:'Sair',ok_in:'Bem-vinda de volta ✦',e_used:'Este e-mail já tem conta. Use Entrar.',e_weak:'A senha precisa de 6+ caracteres.',e_bad:'Não deu certo. Confira e-mail e senha.',e_slot:'Esse horário acabou de ser reservado. Escolha outro.',mine:'Suas aulas',intro:'Aula introdutória grátis (30 min)',lesson:'Aula de conversação (60 min)',free:'Grátis',b_note:'Os horários são atualizados em tempo real.',ok_reg:'Obrigada por se cadastrar! Enviamos um e-mail de boas-vindas ✦'});
-Object.assign(T.en,{lock_t:'Log in to book',lock_d:'Anyone can see the times. To book, create a free account or log in.',lock_r:'Create free account',lock_i:'I have an account',st1:'Pick a day',st2:'Pick a time',st3:'Confirm your class',tab_r:'Sign up',tab_i:'Log in',r_sub:'Takes a minute. We only use your details to schedule classes.',r_sub2:'Good to see you again!',ok_n:'Your booking is already saved. To let Kamila know right now, send the email below.',none:'No times available right now. Check back soon!',r_w:'WhatsApp (optional)',cnt:'You already know {n} phrases ✦',shuf:'↻ More phrases',ok_t:'Class booked ✦',ok_c:'Close',sendm:'✉ Email Kamila about it',ok_bk:'Class booked! It now shows in “Your classes” ✦',r_fp:'Forgot password',ok_fp:'If that email has an account, we sent a link to reset the password ✦',r_p:'Password (min. 6)',r_tl:'Log in',r_in:'Log in',r_sw1:'Have an account? Log in',r_sw2:'New here? Sign up',out:'Log out',ok_in:'Welcome back ✦',e_used:'This email already has an account. Use Log in.',e_weak:'Password needs 6+ characters.',e_bad:'That didn’t work. Check email and password.',e_slot:'That slot was just booked. Pick another.',mine:'Your classes',intro:'Free introductory lesson (30 min)',lesson:'Conversation lesson (60 min)',free:'Free',b_note:'Times update in real time.',ok_reg:'Thanks for signing up! We sent you a welcome email ✦'});
+Object.assign(T.pt,{nav_how:'Como funciona',perl:'por aula',lock_t:'Entre para reservar',lock_d:'Qualquer pessoa pode ver os horários. Para reservar, crie sua conta grátis ou entre.',lock_r:'Criar conta grátis',lock_i:'Já tenho conta',st1:'Escolha o dia',st2:'Escolha o horário',st3:'Confirme sua aula',tab_r:'Cadastrar',tab_i:'Entrar',r_sub:'Leva 1 minuto. Usamos seus dados só para agendar as aulas.',r_sub2:'Que bom te ver de novo!',ok_n:'Sua reserva já está salva. Para avisar a Kamila agora, envie o e-mail abaixo.',none:'Sem horários disponíveis por enquanto. Volte em breve!',r_w:'WhatsApp (opcional)',cnt:'Você já sabe {n} frases ✦',shuf:'↻ Mais frases',ok_t:'Aula agendada ✦',ok_c:'Fechar',sendm:'✉ Avisar a Kamila por e-mail',ok_bk:'Aula agendada! Ela já aparece em “Suas aulas” ✦',r_fp:'Esqueci a senha',ok_fp:'Se o e-mail tiver conta, enviamos o link para criar uma nova senha ✦',r_p:'Senha (mín. 6)',r_tl:'Entrar na sua conta',r_in:'Entrar',r_sw1:'Já tem conta? Entrar',r_sw2:'Novo por aqui? Cadastrar',out:'Sair',ok_in:'Bem-vinda de volta ✦',e_used:'Este e-mail já tem conta. Use Entrar.',e_weak:'A senha precisa de 6+ caracteres.',e_bad:'Não deu certo. Confira e-mail e senha.',e_slot:'Esse horário acabou de ser reservado. Escolha outro.',mine:'Suas aulas',intro:'Aula introdutória grátis (30 min)',lesson:'Aula de conversação (60 min)',free:'Grátis',b_note:'Os horários são atualizados em tempo real.',ok_reg:'Obrigada por se cadastrar! Enviamos um e-mail de boas-vindas ✦'});
+Object.assign(T.en,{nav_how:'How it works',perl:'per lesson',lock_t:'Log in to book',lock_d:'Anyone can see the times. To book, create a free account or log in.',lock_r:'Create free account',lock_i:'I have an account',st1:'Pick a day',st2:'Pick a time',st3:'Confirm your class',tab_r:'Sign up',tab_i:'Log in',r_sub:'Takes a minute. We only use your details to schedule classes.',r_sub2:'Good to see you again!',ok_n:'Your booking is already saved. To let Kamila know right now, send the email below.',none:'No times available right now. Check back soon!',r_w:'WhatsApp (optional)',cnt:'You already know {n} phrases ✦',shuf:'↻ More phrases',ok_t:'Class booked ✦',ok_c:'Close',sendm:'✉ Email Kamila about it',ok_bk:'Class booked! It now shows in “Your classes” ✦',r_fp:'Forgot password',ok_fp:'If that email has an account, we sent a link to reset the password ✦',r_p:'Password (min. 6)',r_tl:'Log in',r_in:'Log in',r_sw1:'Have an account? Log in',r_sw2:'New here? Sign up',out:'Log out',ok_in:'Welcome back ✦',e_used:'This email already has an account. Use Log in.',e_weak:'Password needs 6+ characters.',e_bad:'That didn’t work. Check email and password.',e_slot:'That slot was just booked. Pick another.',mine:'Your classes',intro:'Free introductory lesson (30 min)',lesson:'Conversation lesson (60 min)',free:'Free',b_note:'Times update in real time.',ok_reg:'Thanks for signing up! We sent you a welcome email ✦'});
 
+const T0=JSON.parse(JSON.stringify(T));
+function applyTexts(o){for(const l of ['pt','en']){T[l]=JSON.parse(JSON.stringify(T0[l]));const v=(o&&o[l])||{};for(const k in v){const m=k.match(/^([amh])_(\d+)_(\d+)$/);if(m){const r=T[l][m[1]][+m[2]];if(r)r[+m[3]]=v[k]}else T[l][k]=v[k]}}}
 let S={...DEFAULTS},taken=new Set(),mybk=[],photos={},prof={},mode='reg',user=null,unsub=null,sel=null,day=0;
 const pad=n=>String(n).padStart(2,'0'),iso=d=>d.toISOString().slice(0,10),bang=h=>pad((h+10)%24)+':00';
 const fmt=(d,o)=>d.toLocaleDateString(T[L].wd,{...o,timeZone:'UTC'});
 function mkDays(){const a=[],b=new Date(new Date().toLocaleDateString('en-CA',{timeZone:'America/Sao_Paulo'})+'T12:00:00Z');for(let i=1;i<=28&&a.length<10;i++){const d=new Date(b);d.setUTCDate(b.getUTCDate()+i);if(S.days.includes(d.getUTCDay())&&!(S.blocked||[]).includes(iso(d)))a.push(d)}return a}
 let days=mkDays();
-const BANK=[['Sorry, my English isn’t perfect','Desculpa, meu inglês não é perfeito'],['Hello!','Olá!'],['Where is the station?','Onde fica a estação?'],['Nice to meet you','Prazer em te conhecer'],['I’d like a coffee, please','Quero um café, por favor'],['Can you help me?','Você pode me ajudar?'],['How much is it?','Quanto custa?'],['I’m from Brazil','Eu sou do Brasil'],['Could you repeat that?','Pode repetir, por favor?'],['I’m lost','Estou perdido(a)'],['Is this seat taken?','Este lugar está ocupado?'],['I have a reservation','Tenho uma reserva'],['Let’s keep in touch','Vamos manter contato'],['I’m learning English','Estou aprendendo inglês'],['Take your time','Sem pressa'],['What do you recommend?','O que você recomenda?'],['I missed my flight','Perdi meu voo'],['Tell me more!','Me conta mais!'],['I’d love to','Eu adoraria'],['See you tomorrow','Até amanhã']];
-let shown=[0,1,2,3,4,5],flipped=new Set(),known=new Set(),ready=false,pend=null;
-const cnt=()=>{const t=T[L];$('#cnt').textContent=t.cnt.replace('{n}',known.size);$('#shuf').textContent=t.shuf};
-function drawBub(){$('#bubbles').innerHTML=shown.map((k,i)=>`<button class="bub ${flipped.has(k)?'on':''}" data-k="${k}" style="--i:${i}"><span class="tl3"><span class="in"><span class="f">${BANK[k][0]}</span><span class="b">${BANK[k][1]}</span></span></span></button>`).join('');
- $$('.bub').forEach(b=>b.onclick=()=>{const k=+b.dataset.k,on=b.classList.toggle('on');if(on){flipped.add(k);known.add(k)}else flipped.delete(k);burst(b);cnt()});cnt()}
+const BRL=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(n);
+let ready=false,pend=null,navUsed=false;
+const NAV=[['about','heart','n_about'],['method','chat','n_method'],['classes','plane','n_classes'],['how','pin','nav_how'],['pricing','euro','p_t'],['booking','spark','n_booking']];
+function drawNav(){const t=T[L];$('#bubbles').innerHTML=NAV.map((n,i)=>`<a class="bub" href="#${n[0]}" style="--i:${i}"><span class="tl3"><span class="in"><span class="f"><svg><use href="#i-${n[1]}"/></svg><b>${t[n[2]]}</b></span></span></span></a>`).join('')}
 function showOk(b){const t=T[L],d=new Date(b.date+'T12:00:00Z');$('#okt').textContent=t.ok_t;$('#okb').innerHTML=`<p><b>${t[b.kind]}</b></p><p>${fmt(d,{weekday:'long',day:'numeric',month:'long'})}</p><p>${b.hour}:00 · BRT (UTC−3)</p><p><b>${money(b.price)}</b></p><p style="font-size:14px;margin-top:10px">${t.ok_n}</p>`;$('#okm').href=mt(b);$('#okm').textContent=t.sendm;$('#okd').showModal();burst($('#okm'))}
 const mt=b=>{const dp=new Date(b.date+'T12:00:00Z').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'});return 'mailto:'+ADMIN_EMAIL+'?subject='+encodeURIComponent('Tenho interesse na aula de '+dp+' às '+b.hour+':00')+'&body='+encodeURIComponent('Olá, Kamila! Tudo bem?\n\nTenho interesse na aula de '+dp+', às '+b.hour+':00 (horário de Brasília). Escolhi esse dia e horário diretamente no calendário do seu site.\n\nServiço: '+(T.pt[b.kind]||'')+'\nValor: '+(b.price?'€'+b.price:'Grátis')+'\n\nMeu nome: '+(b.name||'')+'\nMeu e-mail: '+(b.email||'')+'\n\nObrigada!')};
 const money=p=>p?'€'+(+p.toFixed(2)):T[L].free;
 function render(){
  const t=T[L],pl=+(S.price/S.pkg).toFixed(2);document.documentElement.lang=L==='pt'?'pt-BR':'en';
  $$('[data-i]').forEach(e=>e.textContent=t[e.dataset.i].replace('{pl}',pl).replace('{pk}',S.pkg));
- $('#pp').textContent='€'+S.price;
+ $('#pp').textContent='€'+S.price;$('#pbrl').textContent=S.brl?'≈ '+BRL(S.brl)+' · '+BRL(S.brl/S.pkg)+' '+t.perl:'';
  $$('[data-open=signup]').forEach(b=>b.textContent=user?(user.displayName||'✓').split(' ')[0]+' · '+t.out:t.n_sign);
  const ic=n=>`<span class="ic"><svg><use href="#i-${n}"/></svg></span>`;
- drawBub();
+ drawNav();
  $('#mg').innerHTML=t.m.map(m=>`<div class="card">${ic(m[0])}<h3>${m[1]}</h3><p>${m[2]}</p></div>`).join('');
  $('#ag').innerHTML=t.a.map(a=>`<button><div class="card">${ic(a[0])}<h3>${a[1]}</h3><p>${a[2]}</p><div class="more">✦ ${a[3]}</div></div></button>`).join('');
  $$('.aud button').forEach(b=>b.onclick=()=>{const c=b.firstChild,o=c.classList.contains('on');$$('.aud .card').forEach(x=>x.classList.remove('on'));if(!o){c.classList.add('on');burst(c)}});
@@ -379,6 +383,7 @@ async function initFB(){try{
  ({createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,updateProfile,sendEmailVerification,sendPasswordResetEmail}=await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'));
 
  onValue(ref(db,'kamila/settings/site'),s=>{if(s.exists())S={...DEFAULTS,...s.val()};days=mkDays();render()});
+ onValue(ref(db,'kamila/texts'),s=>{applyTexts(s.val());render()});
  onValue(ref(db,'kamila/slots'),s=>{taken=new Set(Object.keys(s.val()||{}));ready=true;render()});
  onValue(ref(db,'kamila/photos'),s=>{photos={};const v=s.val()||{};for(const k in v)photos[k]=v[k].data;applyPh()});
  onAuthStateChanged(auth,async u=>{user=u;unsub&&unsub();unsub=null;mybk=[];prof={};
@@ -403,13 +408,13 @@ $('#rs').onclick=async()=>{const t=T[L],em=$('#re').value.trim(),pw=$('#rp').val
   $('#signup').close();if(pend!==null){sel=pend;pend=null;render();setTimeout(()=>$('#confirm').scrollIntoView({behavior:'smooth',block:'center'}),450)}}
  catch(e){toast(e.code==='auth/email-already-in-use'?t.e_used:e.code==='auth/weak-password'?t.e_weak:t.e_bad)}};
 $('#cbtn').onclick=()=>(!auth||auth.currentUser)?book():$('#signup').showModal();
-$('#shuf').onclick=()=>{let pool=BANK.map((_,i)=>i).filter(i=>!shown.includes(i));for(let i=pool.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[pool[i],pool[j]]=[pool[j],pool[i]]}shown=pool.slice(0,6);flipped.clear();drawBub();burst($('#shuf'))};
 $('#okc').onclick=()=>$('#okd').close();
 $('#lr').onclick=()=>{mode='reg';render();$('#signup').showModal()};$('#li').onclick=()=>{mode='in';render();$('#signup').showModal()};
 let tcur=null;const tReset=()=>{if(tcur){tcur.style.removeProperty('--rx');tcur.style.removeProperty('--ry');tcur=null}};
 addEventListener('pointermove',e=>{const el=e.target.closest&&e.target.closest('.bub,.card');if(el!==tcur)tReset();if(!el)return;tcur=el;const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.setProperty('--rx',(-y*16)+'deg');el.style.setProperty('--ry',(x*16)+'deg')},{passive:true});
 addEventListener('pointerup',tReset);addEventListener('pointercancel',tReset);
-setInterval(()=>{if(known.size>=3)return;const c=$$('.bub:not(.on)');if(!c.length)return;const b=c[Math.random()*c.length|0];b.classList.add('cue');setTimeout(()=>b.classList.remove('cue'),1300)},3200);
+setInterval(()=>{if(navUsed)return;const c=$$('.bub');if(!c.length)return;const b=c[Math.random()*c.length|0];b.classList.add('cue');setTimeout(()=>b.classList.remove('cue'),1300)},3200);
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.bub');if(b){navUsed=true;burst(b)}});
 render();initFB();
 </script>
 </body>
