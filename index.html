@@ -171,17 +171,13 @@ dialog{margin:auto}
 .rv.in{--tx:0px;--ty:0px;--tr:0deg;opacity:1}
 .rv,.card.rv,.zz .ph.rv{transition:opacity .9s ease,translate .9s cubic-bezier(.2,.8,.2,1),rotate .9s ease,transform .2s,box-shadow .3s;transition-delay:var(--dl,0s),var(--dl,0s),var(--dl,0s),0s,0s}
 .rv.nt{transition:none!important}
-#zz{position:relative;max-width:680px;margin:0 auto;padding-left:30px}
-#zz::before{content:"";position:absolute;left:9px;top:14px;bottom:14px;width:2px;border-radius:2px;background:linear-gradient(to bottom,var(--pink),var(--lilac),var(--peach));opacity:.55}
+#zz,#zs{position:relative;max-width:680px;margin:0 auto;padding-left:30px}
+#zz::before,#zs::before{content:"";position:absolute;left:9px;top:14px;bottom:14px;width:2px;border-radius:2px;background:linear-gradient(to bottom,var(--pink),var(--lilac),var(--peach));opacity:.55}
 .zz{position:relative;margin-bottom:36px}
 .zz::before{content:"✦";position:absolute;left:-30px;top:18px;width:20px;height:20px;display:grid;place-items:center;font-size:10px;color:var(--pink);background:var(--bg);border:1px solid var(--line);border-radius:50%;z-index:2;animation:tw 3.4s ease-in-out infinite}
 .zt{border-radius:26px;background:linear-gradient(160deg,color-mix(in srgb,var(--pink) 11%,var(--card)),var(--card));border:1px solid var(--line);padding:20px 20px 22px;backdrop-filter:blur(8px)}
 .zn{display:block;font:800 30px/1 var(--d);letter-spacing:-.04em;background:var(--holo);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:10px}
 .zn{display:none}
-#zmore{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s ease}
-#zmore .zin{overflow:hidden;min-height:0}
-#zz.open #zmore{grid-template-rows:1fr}
-#zz:not(.open) #zmore{visibility:hidden}
 .zbtn{display:block;margin:6px auto 0}
 .zt p{font-size:16px;line-height:1.7;color:var(--ink);white-space:pre-line}
 .fig{position:relative;overflow:hidden;margin-top:14px;border-radius:26px;border:1px solid var(--line);box-shadow:0 22px 44px -26px var(--pink);background:var(--card);line-height:0}
@@ -194,7 +190,6 @@ dialog{margin:auto}
 .zz.zl .rv:not(.in){--tx:-34px;--tr:-2deg}
 .zz.zr .rv:not(.in){--tx:34px;--tr:2deg}
 /* about effects */
-#zz,#zz *{overflow-anchor:none}
 .zt{position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
 .zt::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);translate:-130% 0;pointer-events:none}
 .zt.in::before{animation:sweep 1.6s .35s ease both}
@@ -209,12 +204,22 @@ dialog{margin:auto}
 .zz:nth-child(even) .fig{border-radius:26px 90px 26px 26px}
 .zz:nth-child(odd) .fig{border-radius:90px 26px 26px 26px}
 .zz::before{transition:transform .4s}.zz:hover::before{transform:scale(1.35) rotate(90deg)}
-#zmore{transition:grid-template-rows .7s cubic-bezier(.2,.8,.2,1),visibility 0s .7s}
-#zz.open #zmore{transition-delay:0s,0s}
 .zbtn{position:relative;animation:pulse 2.6s ease-in-out infinite}
-.zbtn::after{content:"";display:inline-block;width:8px;height:8px;margin-left:10px;border-right:2px solid #fff;border-bottom:2px solid #fff;rotate:45deg;translate:0 -3px;transition:rotate .4s,translate .4s}
-#zz.open .zbtn::after{rotate:225deg;translate:0 2px}
+#zz .zbtn{margin-top:26px}
+.zbtn::after{content:"→";display:inline-block;margin-left:10px;transition:translate .35s}.zbtn:hover::after{translate:6px 0}
 @keyframes pulse{50%{box-shadow:0 8px 34px -4px var(--pink)}}
+.zz.last{margin-bottom:0}
+body.lock{overflow:hidden}
+#story{position:fixed;inset:0;z-index:80;background:var(--bg);display:none;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 16px calc(40px + env(safe-area-inset-bottom,0px))}
+#story.on{display:block;animation:stIn .55s cubic-bezier(.2,.8,.2,1) both}
+#story.out{display:block;animation:stOut .35s ease both}
+@keyframes stIn{from{opacity:0;transform:translateY(40px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes stOut{to{opacity:0;transform:translateY(30px) scale(.98)}}
+.sthead{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:680px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top,0px)) 0 14px;background:linear-gradient(var(--bg) 70%,transparent)}
+.sthead h2{margin:0}
+#story .stwrap{max-width:680px;margin:0 auto;padding-top:6px}
+#story #zs{margin-top:6px}
+.stfoot{text-align:center;margin-top:34px}
 @media(min-width:760px){.zt p{font-size:18px}.zt{padding:28px 30px 30px}.zz{margin-bottom:48px}}
 </style>
 </head>
@@ -231,6 +236,10 @@ dialog{margin:auto}
     <button class="pill burger" id="bg" aria-label="Menu">☰</button>
   </div>
 </header>
+<div id="story" role="dialog" aria-modal="true" aria-labelledby="stt" aria-hidden="true">
+  <div class="sthead"><h2 id="stt" data-i="a_t"></h2><button class="pill" id="stx" type="button" aria-label="Close">✕</button></div>
+  <div class="stwrap"><p class="lead" data-i="a_l"></p><div id="zs"></div><div class="stfoot"><button class="btn" id="stc" type="button" data-i="sclose"></button></div></div>
+</div>
 <div id="sheet">
   <button class="pill x" id="cl">✕</button>
   <a href="#home" data-i="n_home"></a><a href="#about" data-i="n_about"></a><a href="#method" data-i="n_method"></a><a href="#classes" data-i="n_classes"></a><a href="#booking" data-i="n_booking"></a>
@@ -350,8 +359,8 @@ m:[['chat','Conversation first','Speaking is the heart of every class.'],['heart
 a:[['plane','English for travel','Airports, hotels, restaurants and public transport with confidence.','You learn to handle any everyday travel situation.'],['home','English for living abroad','For people relocating or already living overseas.','Housing, services, new friendships and daily life.'],['brief','English for international work','Interviews, meetings, presentations and networking.','To open professional doors abroad.'],['spark','English for confidence','You studied before but freeze when speaking.','Confidence built through conversation and practice.']],
 h:[['Register','Fill in the form with contact details, goals and availability.'],['Free intro lesson','30 min to get to know you, your goals and your challenges.'],['Personalised plan','A tailored proposal of topics, vocabulary and skills.'],['Service agreement','Six-month initial term, sent for e-signature.'],['Classes begin','Weekly online lessons once payment is confirmed.']],
 wd:'en-GB',fr:'Free',bk:'Booked',me:'Yours'}};
-Object.assign(T.pt,{rmore:'Ler mais ✦',rless:'Mostrar menos',cal_note:'Você recebe a confirmação por e-mail, com o link da aula no Google Meet.',cal_load:'Carregando a agenda…',more:'Ler mais ✦',ab1:'[Escreva aqui sobre a sua formação em Letras (Inglês) e a sua experiência como professora.]',ab2:'[Escreva aqui sobre os quase três anos em uma multinacional.]',ab3:'[Escreva aqui sobre a sua experiência morando fora.]',ab4:'[Escreva aqui sobre as suas viagens pelo mundo.]',ab5:'[Escreva aqui sobre conversar com pessoas de vários países e culturas.]',ab6:'[Escreva aqui por que você quer ajudar as pessoas a ganharem confiança no inglês.]',nav_how:'Como funciona',perl:'por aula',lock_t:'Entre para reservar',lock_d:'Qualquer pessoa pode ver os horários. Para reservar, crie sua conta grátis ou entre.',lock_r:'Criar conta grátis',lock_i:'Já tenho conta',st1:'Escolha o dia',st2:'Escolha o horário',st3:'Confirme sua aula',tab_r:'Cadastrar',tab_i:'Entrar',r_sub:'Leva 1 minuto. Usamos seus dados só para agendar as aulas.',r_sub2:'Que bom te ver de novo!',ok_n:'Sua reserva já está salva. Para avisar a Kamila agora, envie o e-mail abaixo.',none:'Sem horários disponíveis por enquanto. Volte em breve!',r_w:'WhatsApp (opcional)',cnt:'Você já sabe {n} frases ✦',shuf:'↻ Mais frases',ok_t:'Aula agendada ✦',ok_c:'Fechar',sendm:'✉ Avisar a Kamila por e-mail',ok_bk:'Aula agendada! Ela já aparece em “Suas aulas” ✦',r_fp:'Esqueci a senha',ok_fp:'Se o e-mail tiver conta, enviamos o link para criar uma nova senha ✦',r_p:'Senha (mín. 6)',r_tl:'Entrar na sua conta',r_in:'Entrar',r_sw1:'Já tem conta? Entrar',r_sw2:'Novo por aqui? Cadastrar',out:'Sair',ok_in:'Bem-vinda de volta ✦',e_used:'Este e-mail já tem conta. Use Entrar.',e_weak:'A senha precisa de 6+ caracteres.',e_bad:'Não deu certo. Confira e-mail e senha.',e_slot:'Esse horário acabou de ser reservado. Escolha outro.',mine:'Suas aulas',intro:'Aula introdutória grátis (30 min)',lesson:'Aula de conversação (60 min)',free:'Grátis',b_note:'Os horários são atualizados em tempo real.',ok_reg:'Obrigada por se cadastrar! Enviamos um e-mail de boas-vindas ✦'});
-Object.assign(T.en,{rmore:'Read More ✦',rless:'Show less',cal_note:'You’ll get a confirmation email with the Google Meet link.',cal_load:'Loading the calendar…',more:'Read more ✦',ab1:'[Write here about your English Language and Literature degree and your teaching experience.]',ab2:'[Write here about your almost three years in a multinational.]',ab3:'[Write here about living abroad.]',ab4:'[Write here about your travels around the world.]',ab5:'[Write here about talking with people from many countries and cultures.]',ab6:'[Write here about why you want to help people feel confident in English.]',nav_how:'How it works',perl:'per lesson',lock_t:'Log in to book',lock_d:'Anyone can see the times. To book, create a free account or log in.',lock_r:'Create free account',lock_i:'I have an account',st1:'Pick a day',st2:'Pick a time',st3:'Confirm your class',tab_r:'Sign up',tab_i:'Log in',r_sub:'Takes a minute. We only use your details to schedule classes.',r_sub2:'Good to see you again!',ok_n:'Your booking is already saved. To let Kamila know right now, send the email below.',none:'No times available right now. Check back soon!',r_w:'WhatsApp (optional)',cnt:'You already know {n} phrases ✦',shuf:'↻ More phrases',ok_t:'Class booked ✦',ok_c:'Close',sendm:'✉ Email Kamila about it',ok_bk:'Class booked! It now shows in “Your classes” ✦',r_fp:'Forgot password',ok_fp:'If that email has an account, we sent a link to reset the password ✦',r_p:'Password (min. 6)',r_tl:'Log in',r_in:'Log in',r_sw1:'Have an account? Log in',r_sw2:'New here? Sign up',out:'Log out',ok_in:'Welcome back ✦',e_used:'This email already has an account. Use Log in.',e_weak:'Password needs 6+ characters.',e_bad:'That didn’t work. Check email and password.',e_slot:'That slot was just booked. Pick another.',mine:'Your classes',intro:'Free introductory lesson (30 min)',lesson:'Conversation lesson (60 min)',free:'Free',b_note:'Times update in real time.',ok_reg:'Thanks for signing up! We sent you a welcome email ✦'});
+Object.assign(T.pt,{rmore:'Ler mais',sclose:'Fechar',cal_note:'Você recebe a confirmação por e-mail, com o link da aula no Google Meet.',cal_load:'Carregando a agenda…',more:'Ler mais ✦',ab1:'[Escreva aqui sobre a sua formação em Letras (Inglês) e a sua experiência como professora.]',ab2:'[Escreva aqui sobre os quase três anos em uma multinacional.]',ab3:'[Escreva aqui sobre a sua experiência morando fora.]',ab4:'[Escreva aqui sobre as suas viagens pelo mundo.]',ab5:'[Escreva aqui sobre conversar com pessoas de vários países e culturas.]',ab6:'[Escreva aqui por que você quer ajudar as pessoas a ganharem confiança no inglês.]',nav_how:'Como funciona',perl:'por aula',lock_t:'Entre para reservar',lock_d:'Qualquer pessoa pode ver os horários. Para reservar, crie sua conta grátis ou entre.',lock_r:'Criar conta grátis',lock_i:'Já tenho conta',st1:'Escolha o dia',st2:'Escolha o horário',st3:'Confirme sua aula',tab_r:'Cadastrar',tab_i:'Entrar',r_sub:'Leva 1 minuto. Usamos seus dados só para agendar as aulas.',r_sub2:'Que bom te ver de novo!',ok_n:'Sua reserva já está salva. Para avisar a Kamila agora, envie o e-mail abaixo.',none:'Sem horários disponíveis por enquanto. Volte em breve!',r_w:'WhatsApp (opcional)',cnt:'Você já sabe {n} frases ✦',shuf:'↻ Mais frases',ok_t:'Aula agendada ✦',ok_c:'Fechar',sendm:'✉ Avisar a Kamila por e-mail',ok_bk:'Aula agendada! Ela já aparece em “Suas aulas” ✦',r_fp:'Esqueci a senha',ok_fp:'Se o e-mail tiver conta, enviamos o link para criar uma nova senha ✦',r_p:'Senha (mín. 6)',r_tl:'Entrar na sua conta',r_in:'Entrar',r_sw1:'Já tem conta? Entrar',r_sw2:'Novo por aqui? Cadastrar',out:'Sair',ok_in:'Bem-vinda de volta ✦',e_used:'Este e-mail já tem conta. Use Entrar.',e_weak:'A senha precisa de 6+ caracteres.',e_bad:'Não deu certo. Confira e-mail e senha.',e_slot:'Esse horário acabou de ser reservado. Escolha outro.',mine:'Suas aulas',intro:'Aula introdutória grátis (30 min)',lesson:'Aula de conversação (60 min)',free:'Grátis',b_note:'Os horários são atualizados em tempo real.',ok_reg:'Obrigada por se cadastrar! Enviamos um e-mail de boas-vindas ✦'});
+Object.assign(T.en,{rmore:'Read More',sclose:'Close',cal_note:'You’ll get a confirmation email with the Google Meet link.',cal_load:'Loading the calendar…',more:'Read more ✦',ab1:'[Write here about your English Language and Literature degree and your teaching experience.]',ab2:'[Write here about your almost three years in a multinational.]',ab3:'[Write here about living abroad.]',ab4:'[Write here about your travels around the world.]',ab5:'[Write here about talking with people from many countries and cultures.]',ab6:'[Write here about why you want to help people feel confident in English.]',nav_how:'How it works',perl:'per lesson',lock_t:'Log in to book',lock_d:'Anyone can see the times. To book, create a free account or log in.',lock_r:'Create free account',lock_i:'I have an account',st1:'Pick a day',st2:'Pick a time',st3:'Confirm your class',tab_r:'Sign up',tab_i:'Log in',r_sub:'Takes a minute. We only use your details to schedule classes.',r_sub2:'Good to see you again!',ok_n:'Your booking is already saved. To let Kamila know right now, send the email below.',none:'No times available right now. Check back soon!',r_w:'WhatsApp (optional)',cnt:'You already know {n} phrases ✦',shuf:'↻ More phrases',ok_t:'Class booked ✦',ok_c:'Close',sendm:'✉ Email Kamila about it',ok_bk:'Class booked! It now shows in “Your classes” ✦',r_fp:'Forgot password',ok_fp:'If that email has an account, we sent a link to reset the password ✦',r_p:'Password (min. 6)',r_tl:'Log in',r_in:'Log in',r_sw1:'Have an account? Log in',r_sw2:'New here? Sign up',out:'Log out',ok_in:'Welcome back ✦',e_used:'This email already has an account. Use Log in.',e_weak:'Password needs 6+ characters.',e_bad:'That didn’t work. Check email and password.',e_slot:'That slot was just booked. Pick another.',mine:'Your classes',intro:'Free introductory lesson (30 min)',lesson:'Conversation lesson (60 min)',free:'Free',b_note:'Times update in real time.',ok_reg:'Thanks for signing up! We sent you a welcome email ✦'});
 
 const T0=JSON.parse(JSON.stringify(T));
 function applyTexts(o){for(const l of ['pt','en']){T[l]=JSON.parse(JSON.stringify(T0[l]));const v=(o&&o[l])||{};for(const k in v){const m=k.match(/^([amh])_(\d+)_(\d+)$/);if(m){const r=T[l][m[1]][+m[2]];if(r)r[+m[3]]=v[k]}else T[l][k]=v[k]}}}
@@ -362,15 +371,30 @@ const calSrc=u=>{const m=String(u||'').match(/schedules\/([^\/?#]+)/);return m?'
 const NAV=[['about','heart','n_about'],['method','chat','n_method'],['classes','plane','n_classes'],['how','pin','nav_how'],['pricing','euro','p_t'],['booking','spark','n_booking']];
 const seen=new Set();let io;
 function reveal(){if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');seen.add(e.target.dataset.rk);io.unobserve(e.target)}}),{threshold:.12});
- const c={};$$('#mg .card,#ag .card,.price,#pricing .grid .card,.tl li,.zz .fig,.zz .zt,.calwrap,.stats b').forEach(el=>{el.classList.add('rv');const sid=(el.closest('section')||{}).id||'x';c[sid]=(c[sid]||0)+1;const k=sid+c[sid];el.dataset.rk=k;el.style.setProperty('--dl',(c[sid]%4)*.09+'s');if(el.classList.contains('in'))return;if(seen.has(k))el.classList.add('in','nt');else io.observe(el)})}
+ const c={};$$('#mg .card,#ag .card,.price,#pricing .grid .card,.tl li,.zz .fig,.zz .zt,.calwrap,.stats b').forEach(el=>{el.classList.add('rv');const sid=(el.closest('section')||{}).id||'x';c[sid]=(c[sid]||0)+1;const k=sid+c[sid];el.dataset.rk=k;el.style.setProperty('--dl',(c[sid]%4)*.09+'s');if(el.classList.contains('in'))return;if(seen.has(k)&&!el.closest('#story'))el.classList.add('in','nt');else io.observe(el)})}
 function drawNav(){const t=T[L];$('#bubbles').innerHTML=NAV.map((n,i)=>`<a class="bub" href="#${n[0]}" style="--i:${i}"><span class="tl3"><span class="in"><span class="f"><svg><use href="#i-${n[1]}"/></svg><b>${t[n[2]]}</b></span></span></span></a>`).join('')}
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-function drawAbout(){const t=T[L],open=$('#zz')&&$('#zz').classList.contains('open');const blk=i=>`<div class="zz ${i%2?'zl':'zr'}"><div class="zt"><p>${esc(t['ab'+i]||'')}</p></div><figure class="fig" data-p="p${i}"></figure></div>`;
- $('#zz').innerHTML=blk(1)+`<div id="zmore"><div class="zin">${[2,3,4,5,6].map(blk).join('')}</div></div><button type="button" class="btn zbtn" id="zbtn" aria-expanded="${open}">${open?t.rless:t.rmore}</button>`;
- $('#zz').classList.toggle('open',open);
- $('#zbtn').onclick=()=>{const z=$('#zz'),o=z.classList.toggle('open');if(!o){const a=$('#about'),y=a.getBoundingClientRect().top+scrollY-(parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||0);scrollTo({top:Math.max(0,y),behavior:'smooth'})}$('#zbtn').setAttribute('aria-expanded',o);$('#zbtn').textContent=o?T[L].rless:T[L].rmore;if(o)setTimeout(reveal,50)};
+function blk(i){const t=T[L];return `<div class="zz ${i%2?'zl':'zr'}${i===6?' last':''}"><div class="zt"><p>${esc(t['ab'+i]||'')}</p></div><figure class="fig" data-p="p${i}"></figure></div>`}
+function drawAbout(){const t=T[L];
+ $('#zz').innerHTML=blk(1)+`<div style="text-align:center"><button type="button" class="btn zbtn" id="zbtn" aria-haspopup="dialog">${t.rmore}</button></div>`;
+ $('#zbtn').onclick=openStory;
+ if($('#story').classList.contains('on'))drawStory();
  applyPh();tilt()}
-function tilt(){$$('#zz .fig').forEach(f=>{if(f._t)return;f._t=1;f.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=f.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;f.style.setProperty('--ry',x*8+'deg');f.style.setProperty('--rx',-y*8+'deg')});f.addEventListener('pointerleave',()=>{f.style.setProperty('--ry','0deg');f.style.setProperty('--rx','0deg')})})}
+function drawStory(){$('#zs').innerHTML=[1,2,3,4,5,6].map(blk).join('');applyPh();tilt()}
+let stBack;
+function openStory(e){const st=$('#story');if(st.classList.contains('on'))return;stBack=e&&e.currentTarget;drawStory();st.classList.remove('out');st.classList.add('on');st.setAttribute('aria-hidden','false');st.scrollTop=0;document.body.classList.add('lock');
+ try{history.pushState({story:1},'')}catch(_){}
+ reveal();$('#stx').focus({preventScroll:true})}
+function closeStory(fromPop){const st=$('#story');if(!st.classList.contains('on')||st.classList.contains('out'))return;
+ if(!fromPop&&history.state&&history.state.story){history.back();return}
+ st.classList.add('out');st.setAttribute('aria-hidden','true');document.body.classList.remove('lock');
+ setTimeout(()=>{st.classList.remove('on','out');$('#zs').innerHTML=''},340);
+ if(stBack)stBack.focus({preventScroll:true})}
+addEventListener('popstate',()=>closeStory(true));
+addEventListener('keydown',e=>{if(e.key==='Escape')closeStory()});
+$('#stx').onclick=()=>closeStory();$('#stc').onclick=()=>closeStory();
+$('#story').addEventListener('click',e=>{if(e.target.id==='story')closeStory()});
+function tilt(){$$('.zz .fig').forEach(f=>{if(f._t)return;f._t=1;f.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=f.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;f.style.setProperty('--ry',x*8+'deg');f.style.setProperty('--rx',-y*8+'deg')});f.addEventListener('pointerleave',()=>{f.style.setProperty('--ry','0deg');f.style.setProperty('--rx','0deg')})})}
 function applyPh(){$$('.fig[data-p]').forEach(f=>{const k=f.dataset.p,u=photos[k];f.classList.toggle('empty',!u);f.innerHTML=u?`<img src="${u}" alt="" loading="lazy" decoding="async">`:`Foto ${k.slice(1)}`})}
 function render(){
  const t=T[L],pl=+(S.price/S.pkg).toFixed(2);document.documentElement.lang=L==='pt'?'pt-BR':'en';
