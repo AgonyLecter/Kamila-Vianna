@@ -191,8 +191,30 @@ dialog{margin:auto}
 .fig::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.3) 50%,transparent 65%);translate:-130% 0;pointer-events:none}
 .fig.in::after{animation:sweep 1.5s .45s ease both}
 @keyframes sweep{to{translate:130% 0}}
-.zz:nth-child(odd) .fig.rv:not(.in){--tr:-2deg}
-.zz:nth-child(even) .fig.rv:not(.in){--tr:2deg}
+.zz.zl .rv:not(.in){--tx:-34px;--tr:-2deg}
+.zz.zr .rv:not(.in){--tx:34px;--tr:2deg}
+/* about effects */
+#zz,#zz *{overflow-anchor:none}
+.zt{position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.zt::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);translate:-130% 0;pointer-events:none}
+.zt.in::before{animation:sweep 1.6s .35s ease both}
+.zt::after{content:"✦";position:absolute;right:16px;bottom:10px;font-size:16px;color:var(--pink);opacity:.5;animation:tw 3s ease-in-out infinite;pointer-events:none}
+.zt:hover{transform:translateY(-4px);border-color:var(--pink);box-shadow:0 22px 40px -24px var(--pink)}
+.zt p::first-letter{font:800 1.9em/1 var(--d);background:var(--holo);-webkit-background-clip:text;background-clip:text;color:transparent;margin-right:1px}
+.fig{transition:transform .25s ease-out,box-shadow .35s;transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+.fig:hover{box-shadow:0 30px 56px -24px var(--pink)}
+.fig img{transform:scale(1.12);transition:transform 1.8s cubic-bezier(.2,.8,.2,1)}
+.fig.in img{transform:scale(1)}
+.fig:hover img{transform:scale(1.07);transition-duration:.9s}
+.zz:nth-child(even) .fig{border-radius:26px 90px 26px 26px}
+.zz:nth-child(odd) .fig{border-radius:90px 26px 26px 26px}
+.zz::before{transition:transform .4s}.zz:hover::before{transform:scale(1.35) rotate(90deg)}
+#zmore{transition:grid-template-rows .7s cubic-bezier(.2,.8,.2,1),visibility 0s .7s}
+#zz.open #zmore{transition-delay:0s,0s}
+.zbtn{position:relative;animation:pulse 2.6s ease-in-out infinite}
+.zbtn::after{content:"";display:inline-block;width:8px;height:8px;margin-left:10px;border-right:2px solid #fff;border-bottom:2px solid #fff;rotate:45deg;translate:0 -3px;transition:rotate .4s,translate .4s}
+#zz.open .zbtn::after{rotate:225deg;translate:0 2px}
+@keyframes pulse{50%{box-shadow:0 8px 34px -4px var(--pink)}}
 @media(min-width:760px){.zt p{font-size:18px}.zt{padding:28px 30px 30px}.zz{margin-bottom:48px}}
 </style>
 </head>
@@ -343,11 +365,12 @@ function reveal(){if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isI
  const c={};$$('#mg .card,#ag .card,.price,#pricing .grid .card,.tl li,.zz .fig,.zz .zt,.calwrap,.stats b').forEach(el=>{el.classList.add('rv');const sid=(el.closest('section')||{}).id||'x';c[sid]=(c[sid]||0)+1;const k=sid+c[sid];el.dataset.rk=k;el.style.setProperty('--dl',(c[sid]%4)*.09+'s');if(el.classList.contains('in'))return;if(seen.has(k))el.classList.add('in','nt');else io.observe(el)})}
 function drawNav(){const t=T[L];$('#bubbles').innerHTML=NAV.map((n,i)=>`<a class="bub" href="#${n[0]}" style="--i:${i}"><span class="tl3"><span class="in"><span class="f"><svg><use href="#i-${n[1]}"/></svg><b>${t[n[2]]}</b></span></span></span></a>`).join('')}
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-function drawAbout(){const t=T[L],open=$('#zz')&&$('#zz').classList.contains('open');const blk=i=>`<div class="zz"><div class="zt"><p>${esc(t['ab'+i]||'')}</p></div><figure class="fig" data-p="p${i}"></figure></div>`;
+function drawAbout(){const t=T[L],open=$('#zz')&&$('#zz').classList.contains('open');const blk=i=>`<div class="zz ${i%2?'zl':'zr'}"><div class="zt"><p>${esc(t['ab'+i]||'')}</p></div><figure class="fig" data-p="p${i}"></figure></div>`;
  $('#zz').innerHTML=blk(1)+`<div id="zmore"><div class="zin">${[2,3,4,5,6].map(blk).join('')}</div></div><button type="button" class="btn zbtn" id="zbtn" aria-expanded="${open}">${open?t.rless:t.rmore}</button>`;
  $('#zz').classList.toggle('open',open);
- $('#zbtn').onclick=()=>{const z=$('#zz'),o=z.classList.toggle('open');$('#zbtn').setAttribute('aria-expanded',o);$('#zbtn').textContent=o?T[L].rless:T[L].rmore;if(o)setTimeout(reveal,50)};
- applyPh()}
+ $('#zbtn').onclick=()=>{const z=$('#zz'),o=z.classList.toggle('open');if(!o){const a=$('#about'),y=a.getBoundingClientRect().top+scrollY-(parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||0);scrollTo({top:Math.max(0,y),behavior:'smooth'})}$('#zbtn').setAttribute('aria-expanded',o);$('#zbtn').textContent=o?T[L].rless:T[L].rmore;if(o)setTimeout(reveal,50)};
+ applyPh();tilt()}
+function tilt(){$$('#zz .fig').forEach(f=>{if(f._t)return;f._t=1;f.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=f.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;f.style.setProperty('--ry',x*8+'deg');f.style.setProperty('--rx',-y*8+'deg')});f.addEventListener('pointerleave',()=>{f.style.setProperty('--ry','0deg');f.style.setProperty('--rx','0deg')})})}
 function applyPh(){$$('.fig[data-p]').forEach(f=>{const k=f.dataset.p,u=photos[k];f.classList.toggle('empty',!u);f.innerHTML=u?`<img src="${u}" alt="" loading="lazy" decoding="async">`:`Foto ${k.slice(1)}`})}
 function render(){
  const t=T[L],pl=+(S.price/S.pkg).toFixed(2);document.documentElement.lang=L==='pt'?'pt-BR':'en';
