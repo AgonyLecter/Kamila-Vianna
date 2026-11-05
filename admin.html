@@ -38,7 +38,7 @@ a{color:var(--pink)}
 <div id="gate" hidden><div class="card" style="width:min(92vw,380px)"><h2 style="margin-top:0">Entrar no painel</h2><p style="margin:10px 0 4px">E-mail</p><input id="ge" type="email" autocomplete="email"><p style="margin:10px 0 4px">Senha</p><input id="gp" type="password" autocomplete="current-password"><button class="btn" id="gs">Entrar</button><p id="gm" style="margin-top:10px;color:var(--pink);font-size:14px"></p></div></div>
 <div class="top">
   <div class="head"><h1>Painel ✦</h1><div class="lang" id="lang" role="group" aria-label="Idioma dos textos"><button class="chip on" data-l="pt">Português</button><button class="chip" data-l="en">English</button></div></div>
-  <div class="tabs" id="tabs"><button class="chip on" data-t="fotos">📷 Fotos</button><button class="chip" data-t="precos">💶 Preços</button><button class="chip" data-t="info">ℹ️ Info</button></div>
+  <div class="tabs" id="tabs"><button class="chip on" data-t="fotos">📷 Fotos</button><button class="chip" data-t="precos">💶 Preços</button><button class="chip" data-t="metodo">🧩 Método</button><button class="chip" data-t="info">ℹ️ Info</button></div>
 </div>
 <p class="warn" id="test" hidden>Modo de teste: sem login. Antes de publicar, adicionar login de admin e fechar as regras do banco de dados.</p>
 <p class="warn" id="err" hidden>Firebase não carregou. Abra este painel pelo endereço publicado (GitHub Pages), com internet. Abrir o arquivo direto do celular não funciona.</p>
@@ -61,6 +61,12 @@ a{color:var(--pink)}
   <details class="card"><summary>Agenda (só mude se trocar de calendário)</summary>
     <label for="cu">Link do Google Calendar</label><input id="cu" type="text" placeholder="https://calendar.google.com/…" autocomplete="off">
   </details>
+</section>
+
+<section id="p-metodo" hidden>
+  <h2>Método</h2>
+  <p class="sub">A seção “Meu método” do site: o título, a frase de destaque e os 7 cards. Toque num card para abrir e editar.</p>
+  <div id="met"></div>
 </section>
 
 <section id="p-info" hidden>
@@ -118,8 +124,11 @@ function drawInfo(){
 function drawTX(){const op=[...document.querySelectorAll('#tx details')].map(d=>d.open);
  $('#tx').innerHTML=G.map(([g,ks])=>`<details class="card"><summary>${g}</summary>${ks.map(([k,l])=>field(k,l,(DT[lang][k]||'').length>90?4:2)).join('')}</details>`).join('');
  document.querySelectorAll('#tx details').forEach((d,i)=>d.open=!!op[i])}
-function drawText(){drawAB();drawInfo();if(ADV)drawTX()}
-function show(t){tab=t;document.querySelectorAll('#tabs .chip').forEach(c=>c.classList.toggle('on',c.dataset.t===t));['fotos','precos','info','adv'].forEach(x=>{const e=$('#p-'+x);if(e)e.hidden=x!==t});scrollTo({top:0})}
+function drawMet(){const op=[...document.querySelectorAll('#met details')].map(d=>d.open);
+ $('#met').innerHTML=`<div class="card"><h3>Títulos da seção</h3>${field('m_t','Título',1)}${field('m_big','Frase de destaque',2)}${field('m_l','Texto de apoio',3)}</div>`+[0,1,2,3,4,5,6].map(i=>`<details class="card"><summary>Card ${i+1} · ${esc(val(lang,'m_'+i+'_1'))}</summary>${field('m_'+i+'_1','Título do card',1)}${field('m_'+i+'_2','Texto do card',3)}</details>`).join('');
+ document.querySelectorAll('#met details').forEach((d,i)=>d.open=!!op[i])}
+function drawText(){drawAB();drawInfo();drawMet();if(ADV)drawTX()}
+function show(t){tab=t;document.querySelectorAll('#tabs .chip').forEach(c=>c.classList.toggle('on',c.dataset.t===t));['fotos','precos','metodo','info','adv'].forEach(x=>{const e=$('#p-'+x);if(e)e.hidden=x!==t});scrollTo({top:0})}
 $('#tabs').onclick=e=>{const b=e.target.closest('[data-t]');if(b)show(b.dataset.t)};
 $('#lang').onclick=e=>{const b=e.target.closest('[data-l]');if(!b)return;lang=b.dataset.l;document.querySelectorAll('#lang .chip').forEach(c=>c.classList.toggle('on',c===b));drawText()};
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.k){const k=t.dataset.k,v=t.value;if(v===base(lang,k))delete DR[lang][k];else DR[lang][k]=v;
