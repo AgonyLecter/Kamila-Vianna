@@ -50,11 +50,24 @@ a{color:var(--pink)}
 .mblk .btn.g,.add{margin:0}
 .add{width:100%;margin-bottom:14px;padding:14px}
 
+
+.pair{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:700px){.pair{grid-template-columns:1fr 1fr}}
+.lg{display:block;font-size:12px;font-weight:600;color:var(--mute);margin:0 0 4px 4px;letter-spacing:.02em}
+.tabs .chip{white-space:nowrap}
+.lblk summary{display:flex;align-items:center;gap:8px;list-style-position:inside}
+.lblk .mh{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0 4px}
+.lblk select{padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:15px Figtree}
+.lblk .btn.g,.add{margin:0}
+.add{width:100%;margin-bottom:10px;padding:14px}
+.lblk .ph{margin-top:4px}
+.sect{margin:22px 0 8px}
+body{max-width:860px}
 </style></head><body>
 <div id="gate" hidden><div class="card" style="width:min(92vw,380px)"><h2 style="margin-top:0">Entrar no painel</h2><p style="margin:10px 0 4px">E-mail</p><input id="ge" type="email" autocomplete="email"><p style="margin:10px 0 4px">Senha</p><input id="gp" type="password" autocomplete="current-password"><button class="btn" id="gs">Entrar</button><p id="gm" style="margin-top:10px;color:var(--pink);font-size:14px"></p></div></div>
 <div class="top">
-  <div class="head"><h1>Painel ✦</h1><div class="lang" id="lang" role="group" aria-label="Idioma dos textos"><button class="chip on" data-l="pt">Português</button><button class="chip" data-l="en">English</button></div></div>
-  <div class="tabs" id="tabs"><button class="chip on" data-t="fotos">📷 Fotos</button><button class="chip" data-t="precos">💶 Preços</button><button class="chip" data-t="metodo">🧩 Método</button><button class="chip" data-t="info">ℹ️ Info</button></div>
+  <div class="head"><h1>Painel ✦</h1></div>
+  <div class="tabs" id="tabs"><button class="chip on" data-t="inicio">Início</button><button class="chip" data-t="sobre">Sobre</button><button class="chip" data-t="aulas">Aulas</button><button class="chip" data-t="metodo">Método</button><button class="chip" data-t="como">Como funciona</button><button class="chip" data-t="precos">Preços</button></div>
   <div class="tb" id="tb" role="toolbar" aria-label="Formatação do texto">
     <button type="button" data-c="bold" title="Negrito" aria-label="Negrito"><b>B</b></button>
     <button type="button" data-c="italic" title="Itálico" aria-label="Itálico"><span style="font:italic 700 17px Georgia,serif">I</span></button>
@@ -67,13 +80,41 @@ a{color:var(--pink)}
     <button type="button" data-c="clear" title="Limpar formatação" aria-label="Limpar formatação">Tx</button>
   </div>
 </div>
-<p class="warn" id="test" hidden>Modo de teste: sem login. Antes de publicar, adicionar login de admin e fechar as regras do banco de dados.</p>
-<p class="warn" id="err" hidden>Firebase não carregou. Abra este painel pelo endereço publicado (GitHub Pages), com internet. Abrir o arquivo direto do celular não funciona.</p>
+<p class="warn" id="err" hidden>Firebase não carregou. Abra este painel pelo endereço publicado, com internet. Abrir o arquivo direto do celular não funciona.</p>
 
-<section id="p-fotos">
+<section id="p-inicio">
+  <h2>Início</h2>
+  <p class="sub">Tudo o que você escrever aqui vale para as duas versões do site: <b>PT</b> (português) e <b>EN</b> (inglês). Para formatar, toque no texto e use a barra acima.</p>
+  <div id="s-inicio"></div>
+</section>
+
+<section id="p-sobre" hidden>
   <h2>Sobre mim</h2>
-  <p class="sub">Toque na foto para trocar. Cada foto tem o texto que aparece junto dela no site. O idioma do texto é o que está marcado no topo (Português / English). A foto é salva na hora; os textos, ao tocar em “Salvar”.</p>
-  <div id="ab"></div>
+  <div id="s-sobre"></div>
+  <h3 class="sect">Selos (as pílulas pequenas)</h3>
+  <p class="sub">Adicione, remova ou reordene.</p>
+  <div id="l-badges"></div>
+  <h3 class="sect">Fotos e textos</h3>
+  <p class="sub">O 1º bloco aparece na página inicial; os outros abrem em “Ler mais”. Toque na foto para trocá-la (salva na hora). Os textos salvam em “Salvar alterações”.</p>
+  <div id="l-about"></div>
+</section>
+
+<section id="p-aulas" hidden>
+  <h2>Para quem são as aulas</h2>
+  <div id="s-aulas"></div>
+  <div id="l-aud"></div>
+</section>
+
+<section id="p-metodo" hidden>
+  <h2>Método</h2>
+  <div id="s-metodo"></div>
+  <div id="l-met"></div>
+</section>
+
+<section id="p-como" hidden>
+  <h2>Como funcionam as aulas</h2>
+  <div id="s-como"></div>
+  <div id="l-how"></div>
 </section>
 
 <section id="p-precos" hidden>
@@ -85,28 +126,10 @@ a{color:var(--pink)}
     <label for="brl">Valor do pacote em reais (R$) <span class="badge">opcional</span></label><input id="brl" type="number" inputmode="decimal" min="0">
     <div class="big" id="per"></div>
   </div>
+  <div id="s-precos"></div>
   <details class="card"><summary>Agenda (só mude se trocar de calendário)</summary>
     <label for="cu">Link do Google Calendar</label><input id="cu" type="text" placeholder="https://calendar.google.com/…" autocomplete="off">
   </details>
-</section>
-
-<section id="p-metodo" hidden>
-  <h2>Método</h2>
-  <p class="sub">A seção “Meu método” do site. Edite os textos e <b>adicione ou remova blocos</b> como quiser; use ↑ ↓ para mudar a ordem. Para formatar, selecione o texto e use a barra no topo (negrito, itálico, sublinhado, justificado…).</p>
-  <div id="met"></div>
-</section>
-
-<section id="p-info" hidden>
-  <h2>Informações</h2>
-  <p class="sub">Os textos principais do site, no idioma marcado no topo.</p>
-  <div id="inf"></div>
-</section>
-
-<section id="p-adv" hidden>
-  <h2>Avançado</h2>
-  <p class="sub">Todos os textos do site. Deixe vazio para voltar ao original. Mantenha {pl} e {pk} onde aparecem.</p>
-  <div id="tx"></div>
-  <button class="btn g" id="txr">Restaurar todos os textos originais</button>
 </section>
 
 <div class="bar" id="bar"><span id="barm">Alterações não salvas</span><button class="btn g" id="dis">Descartar</button><button class="btn" id="save">Salvar alterações</button></div>
@@ -118,21 +141,20 @@ try{const c=await import('./firebase-config.js');db=c.db;({ref,onValue,set,remov
   await new Promise(res=>{A.onAuthStateChanged(c.auth,u=>{if(u&&u.email===c.ADMIN_EMAIL){q('#gate').hidden=true;res()}else if(u){q('#gm').textContent='Esta conta não é a da administradora.';A.signOut(c.auth)}});
   q('#gs').onclick=async()=>{try{await A.signInWithEmailAndPassword(c.auth,q('#ge').value.trim(),q('#gp').value)}catch(e){q('#gm').textContent='E-mail ou senha incorretos.'}}})}}
 catch(e){console.warn(e);document.querySelector('#err').hidden=false;ref=()=>0;onValue=()=>{};set=remove=update=async()=>alert('Firebase não carregou')}
+
 const $=s=>document.querySelector(s);
-const ADV=/avancado|advanced/.test(location.search);
-if(ADV){$('#test').hidden=false;$('#tabs').insertAdjacentHTML('beforeend','<button class="chip" data-t="adv">⚙️ Avançado</button>')}
-const toast=m=>{const t=$('#t');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),4000)};
-const wrap=f=>async(...x)=>{try{return await f(...x)}catch(e){toast(/PERMISSION/i.test(String(e.code||e.message))?'Não salvou: faltam as regras do banco. Publique as regras (Realtime Database → Regras).':'Erro ao salvar: '+(e.code||e.message));throw e}};
+const toast=m=>{const t=$('#t');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),5000)};
+const isPerm=e=>/PERMISSION/i.test(String(e&&(e.code||e.message)));
+const rawSet=set,rawRemove=remove;
+const wrap=f=>async(...x)=>{try{return await f(...x)}catch(e){toast(isPerm(e)?'Não salvou: faltam as regras do banco. Publique as regras (Realtime Database → Regras).':'Erro ao salvar: '+(e.code||e.message));throw e}};
 set=wrap(set);update=wrap(update);remove=wrap(remove);
 const DT={"pt": {"tag": "Aulas de inglês online para brasileiros", "h1": "Vá com o inglês que você tem.", "sub": "Você não precisa de um inglês perfeito para viajar, aproveitar oportunidades, conhecer pessoas e construir uma vida internacional.", "cta1": "Aula experimental grátis", "a_t": "Oi, eu sou a Kamila.", "a_l": "Professora, viajante e alguém que também já teve medo de falar.", "ab1": "[Escreva aqui sobre a sua formação em Letras (Inglês) e a sua experiência como professora.]", "ab2": "[Escreva aqui sobre os quase três anos em uma multinacional.]", "ab3": "[Escreva aqui sobre a sua experiência morando fora.]", "ab4": "[Escreva aqui sobre as suas viagens pelo mundo.]", "ab5": "[Escreva aqui sobre conversar com pessoas de vários países e culturas.]", "ab6": "[Escreva aqui por que você quer ajudar as pessoas a ganharem confiança no inglês.]", "s1": "Letras · Inglês", "s2": "3 anos em multinacional", "s3": "Vida no exterior", "s4": "Viagens pelo mundo", "m_t": "Meu método", "m_big": "Menos medo. Mais conversação.", "m_l": "Você usa o inglês que já tem e vai ganhando vocabulário, fluência e precisão no caminho.", "c_t": "Para quem são as aulas?", "c_l": "Toque no seu objetivo.", "h_t": "Como funcionam as aulas", "cta2": "Quero me cadastrar", "p_t": "Valores", "p_a": "Pacote de {pk} aulas de 60 minutos", "p_b": "Equivale a €{pl} por aula · 1 aula por semana · valor final confirmado no lançamento", "p_free": "Aula introdutória grátis", "p_freed": "30 minutos para nos conhecermos e traçar seus objetivos.", "p_wise": "Os pagamentos são feitos exclusivamente pela Wise. Você recebe as instruções depois da aula introdutória e do contrato.", "b_t": "Agende sua aula", "b_l": "Escolha o dia e o horário direto no calendário abaixo.", "m_0_1": "Conversação em primeiro lugar", "m_0_2": "Falar é o centro de todas as aulas.", "m_1_1": "Confiança", "m_1_2": "Perder o medo de errar.", "m_2_1": "Situações reais", "m_2_2": "O que você vai viver fora da sala de aula.", "m_3_1": "Aulas personalizadas", "m_3_2": "Adaptadas a seus objetivos, interesses e nível.", "m_4_1": "Vocabulário útil", "m_4_2": "Palavras ligadas ao que você quer fazer.", "m_5_1": "Feedback construtivo", "m_5_2": "Correções e explicações para se comunicar melhor.", "m_6_1": "Gramática quando precisa", "m_6_2": "Só quando ajuda você a se comunicar.", "a_0_1": "Inglês para viagem", "a_0_2": "Aeroportos, hotéis, restaurantes e transporte público com segurança.", "a_0_3": "Você aprende a se virar em qualquer situação do dia a dia da viagem.", "a_1_1": "Inglês para morar fora", "a_1_2": "Para quem vai se mudar ou já mora no exterior.", "a_1_3": "Moradia, serviços, novas amizades e a vida cotidiana.", "a_2_1": "Inglês para trabalho internacional", "a_2_2": "Entrevistas, reuniões, apresentações e networking.", "a_2_3": "Para abrir portas profissionais fora do Brasil.", "a_3_1": "Inglês para confiança", "a_3_2": "Já estudou, mas trava na hora de falar.", "a_3_3": "Confiança construída com conversa e prática.", "h_0_0": "Cadastro", "h_0_1": "Preencha o formulário com contato, objetivos e disponibilidade.", "h_1_0": "Aula introdutória grátis", "h_1_1": "30 min para conhecer você, seus objetivos e seus desafios.", "h_2_0": "Plano personalizado", "h_2_1": "Uma proposta sob medida com temas, vocabulário e habilidades.", "h_3_0": "Contrato de serviço", "h_3_1": "Seis meses iniciais, enviado para assinatura eletrônica.", "h_4_0": "Início das aulas", "h_4_1": "Aulas semanais online após a confirmação do pagamento.", "cal_note": "Você recebe a confirmação por e-mail, com o link da aula no Google Meet."}, "en": {"tag": "Online English classes for Brazilians", "h1": "Go with the English you have.", "sub": "You don’t need perfect English to travel, seize opportunities, meet people and build an international life.", "cta1": "Free intro lesson", "a_t": "Hi, I’m Kamila.", "a_l": "Teacher, traveller, and someone who was once afraid to speak too.", "ab1": "[Write here about your English Language and Literature degree and your teaching experience.]", "ab2": "[Write here about your almost three years in a multinational.]", "ab3": "[Write here about living abroad.]", "ab4": "[Write here about your travels around the world.]", "ab5": "[Write here about talking with people from many countries and cultures.]", "ab6": "[Write here about why you want to help people feel confident in English.]", "s1": "English Lang. & Lit.", "s2": "3 yrs multinational", "s3": "Lived abroad", "s4": "Travelled the world", "m_t": "My method", "m_big": "Less fear. More conversation.", "m_l": "You use the English you already have and grow vocabulary, fluency and accuracy along the way.", "c_t": "Who are the classes for?", "c_l": "Tap your goal.", "h_t": "How the classes work", "cta2": "Sign me up", "p_t": "Pricing", "p_a": "Package of {pk} 60-minute lessons", "p_b": "That’s €{pl} per lesson · 1 lesson a week · final price confirmed at launch", "p_free": "Free intro lesson", "p_freed": "30 minutes to get to know each other and set your goals.", "p_wise": "Payments are made exclusively through Wise. Instructions are sent after the intro lesson and agreement.", "b_t": "Book your class", "b_l": "Pick a day and time right in the calendar below.", "m_0_1": "Conversation first", "m_0_2": "Speaking is the heart of every class.", "m_1_1": "Confidence", "m_1_2": "Get past the fear of mistakes.", "m_2_1": "Real-life situations", "m_2_2": "What you will actually face outside the classroom.", "m_3_1": "Personalised lessons", "m_3_2": "Shaped around your goals, interests and level.", "m_4_1": "Practical vocabulary", "m_4_2": "Words tied to what you want to do.", "m_5_1": "Constructive feedback", "m_5_2": "Corrections and explanations to communicate clearly.", "m_6_1": "Grammar when needed", "m_6_2": "Only when it helps you communicate.", "a_0_1": "English for travel", "a_0_2": "Airports, hotels, restaurants and public transport with confidence.", "a_0_3": "You learn to handle any everyday travel situation.", "a_1_1": "English for living abroad", "a_1_2": "For people relocating or already living overseas.", "a_1_3": "Housing, services, new friendships and daily life.", "a_2_1": "English for international work", "a_2_2": "Interviews, meetings, presentations and networking.", "a_2_3": "To open professional doors abroad.", "a_3_1": "English for confidence", "a_3_2": "You studied before but freeze when speaking.", "a_3_3": "Confidence built through conversation and practice.", "h_0_0": "Register", "h_0_1": "Fill in the form with contact details, goals and availability.", "h_1_0": "Free intro lesson", "h_1_1": "30 min to get to know you, your goals and your challenges.", "h_2_0": "Personalised plan", "h_2_1": "A tailored proposal of topics, vocabulary and skills.", "h_3_0": "Service agreement", "h_3_1": "Six-month initial term, sent for e-signature.", "h_4_0": "Classes begin", "h_4_1": "Weekly online lessons once payment is confirmed.", "cal_note": "You’ll get a confirmation email with the Google Meet link."}};
-const LB={tag:'Etiqueta do topo',h1:'Título principal',sub:'Subtítulo',cta1:'Botão principal',a_t:'Título',a_l:'Subtítulo',ab1:'Texto 1 (ao lado da foto 1)',ab2:'Texto 2 (ao lado da foto 2)',ab3:'Texto 3 (ao lado da foto 3)',ab4:'Texto 4 (ao lado da foto 4)',ab5:'Texto 5 (ao lado da foto 5)',ab6:'Texto 6 (ao lado da foto 6)',s1:'Selo 1',s2:'Selo 2',s3:'Selo 3',s4:'Selo 4',m_t:'Título da seção',m_big:'Frase de destaque',m_l:'Texto de apoio',c_t:'Título da seção',c_l:'Texto de apoio',h_t:'Título da seção',cta2:'Botão final',p_t:'Título da seção',p_a:'Texto acima do preço',p_b:'Texto abaixo do preço',p_free:'Card “aula grátis” — título',p_freed:'Card “aula grátis” — texto',p_wise:'Card Wise — texto',b_t:'Título da seção',b_l:'Texto de apoio',cal_note:'Nota abaixo do calendário'};
-const nm=k=>[k,LB[k]],card=(p,n,l)=>[...Array(n)].flatMap((_,i)=>l.map(([j,x])=>[p+'_'+i+'_'+j,'Card '+(i+1)+' — '+x]));
-const G=[['Início',['tag','h1','sub','cta1'].map(nm)],['Sobre mim',['a_t','a_l','s1','s2','s3','s4'].map(nm)],['Método',[...['m_t','m_big','m_l'].map(nm),]],['Para quem são as aulas',[...['c_t','c_l'].map(nm),...card('a',4,[[1,'título'],[2,'descrição'],[3,'texto ao tocar']])]],['Como funcionam as aulas',[nm('h_t'),...card('h',5,[[0,'título'],[1,'texto']]),nm('cta2')]],['Valores',['p_t','p_a','p_b','p_free','p_freed','p_wise'].map(nm)],['Agendamento',['b_t','b_l','cal_note'].map(nm)]];
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-let lang='pt',tab='fotos',TX={},S={price:100,pkg:4,brl:650,calUrl:''},P={},DR={pt:{},en:{}},pd=false;
+const cl=o=>JSON.parse(JSON.stringify(o));
+let TX={},S={price:100,pkg:4,brl:650,calUrl:''},P={},DR={pt:{},en:{}},pd=false,ld=false,LS={},SV={t:null,s:null},RMP=[];
 const base=(l,k)=>(TX[l]&&TX[l][k])||DT[l][k]||'';
 const val=(l,k)=>DR[l][k]!==undefined?DR[l][k]:base(l,k);
-const isDirty=()=>pd||md||Object.keys(DR.pt).length+Object.keys(DR.en).length>0;
+const isDirty=()=>pd||ld||Object.keys(DR.pt).length+Object.keys(DR.en).length>0;
 const bar=()=>$('#bar').classList.toggle('on',isDirty());
 // ---- texto rico: negrito, itálico, sublinhado, alinhamento ----
 const ALW={B:'b',STRONG:'b',I:'i',EM:'i',U:'u',BR:'br',P:'div',DIV:'div'};
@@ -149,8 +171,11 @@ function pack(el){const h=clean(el.innerHTML).replace(/(<br>)+$/,'');
  if(/^(<div[^>]*>)?(<br>)?(<\/div>)?$/.test(h))return '';
  if(!looksHtml(h))return new DOMParser().parseFromString('<body>'+h,'text/html').body.textContent;
  return h}
-const rt=(attrs,v,rows)=>`<div class="rt" contenteditable="true" role="textbox" aria-multiline="${rows>1}" ${rows===1?'data-sl="1"':''} style="--mh:${rows*1.5+1.4}em" ${attrs}>${toHtml(v)}</div>`;
-const field=(k,label,rows,hint)=>`<label>${label}</label>${rt(`data-k="${k}"`,val(lang,k),rows)}${hint?`<p class="hint">${hint}</p>`:''}`;
+const plain=v=>{const t=new DOMParser().parseFromString('<body>'+toHtml(v||''),'text/html').body.textContent.trim();return t.length>44?t.slice(0,44)+'…':t};
+const rt=(attrs,v,rows)=>`<div class="rt" contenteditable="true" role="textbox" aria-multiline="${rows>1}" ${rows===1?'data-sl="1"':''} style="--mh:${rows*1.5+1.4}em" ${attrs}>${toHtml(v||'')}</div>`;
+const LG={pt:'PT · Português',en:'EN · English'};
+const pairOf=(attr,get,rows)=>`<div class="pair">${['pt','en'].map(l=>`<div><span class="lg">${LG[l]}</span>${rt(attr(l),get(l),rows)}</div>`).join('')}</div>`;
+const field=(k,label,rows,hint)=>`<label>${label}</label>${pairOf(l=>`data-k="${k}" data-l="${l}"`,l=>val(l,k),rows)}${hint?`<p class="hint">${hint}</p>`:''}`;
 let cur=null;
 const editing=()=>!!(document.activeElement&&document.activeElement.classList&&document.activeElement.classList.contains('rt'));
 const tbState=()=>document.querySelectorAll('#tb [data-c]').forEach(b=>{const c=b.dataset.c;if(c==='clear')return;let on=false;try{on=document.queryCommandState(c)}catch(_){}b.classList.toggle('on',!!on&&!!cur&&editing())});
@@ -164,73 +189,81 @@ $('#tb').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(!b
  cur.dispatchEvent(new Event('input',{bubbles:true}));tbState()});
 document.addEventListener('keydown',e=>{const t=e.target.closest&&e.target.closest('.rt');if(t&&t.dataset.sl&&e.key==='Enter')e.preventDefault()});
 document.addEventListener('paste',e=>{const t=e.target.closest&&e.target.closest('.rt');if(!t)return;e.preventDefault();let x=(e.clipboardData||window.clipboardData).getData('text/plain');if(t.dataset.sl)x=x.replace(/\s*\n\s*/g,' ');document.execCommand('insertText',false,x)});
-// ---- blocos do método (lista editável) ----
+// ---- listas editáveis (selos, blocos Sobre, cards Aulas, blocos Método, passos) ----
 const ICN=[['chat','Conversa'],['heart','Coração'],['pin','Local'],['target','Alvo'],['book','Livro'],['pen','Caneta'],['layers','Camadas'],['spark','Estrela'],['gift','Presente'],['globe','Globo'],['plane','Avião'],['home','Casa'],['brief','Maleta'],['euro','Euro']];
-let ML=[],MS=null,md=false;
-const cl=o=>JSON.parse(JSON.stringify(o));
-const normML=v=>{if(!v)return null;if(v.n===0)return[];const a=Array.isArray(v.list)?v.list:Object.values(v.list||{});return a.map(x=>({ic:x.ic||'spark',pt:[(x.pt&&x.pt[0])||'',(x.pt&&x.pt[1])||''],en:[(x.en&&x.en[0])||'',(x.en&&x.en[1])||'']}))};
-const defML=()=>['chat','heart','pin','target','book','pen','layers'].map((ic,i)=>({ic,pt:[base('pt','m_'+i+'_1'),base('pt','m_'+i+'_2')],en:[base('en','m_'+i+'_1'),base('en','m_'+i+'_2')]}));
-const mlStart=()=>MS?cl(MS):defML();
-const plain=h=>new DOMParser().parseFromString('<body>'+toHtml(h),'text/html').body.textContent.trim();
-function drawAB(){
- $('#ab').innerHTML=[1,2,3,4,5,6].map(i=>{const k='p'+i,u=P[k];
-  return `<div class="card"><h3>Foto ${i}${i===1?'<span class="badge">aparece na página inicial</span>':'<span class="badge">abre em “Ler mais”</span>'}</h3>
-  <button class="ph ${u?'has':'empty'}" data-u="${k}" style="${u?`background-image:url(${u})`:''}" aria-label="Trocar foto ${i}">${u?'<span>Trocar foto</span>':'+ Adicionar foto'}</button>
-  ${u?`<button class="btn g" data-r="${k}">Remover foto</button>`:''}
-  ${field('ab'+i,'Texto ao lado da foto',5)}</div>`}).join('')+'<input type="file" accept="image/*" id="pick" hidden>';
- $('#pick').onchange=e=>{const f=e.target.files[0],k=$('#pick').dataset.k;e.target.value='';if(f)shrink(f,k)};
- document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{$('#pick').dataset.k=b.dataset.u;$('#pick').click()});
- document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{if(confirm('Remover esta foto?'))remove(ref(db,'kamila/photos/'+b.dataset.r))})}
-function drawInfo(){
- $('#inf').innerHTML=`<div class="card"><h3>Página inicial</h3>${field('h1','Título principal',2)}${field('sub','Frase abaixo do título',3)}</div>
- <div class="card"><h3>Sobre mim</h3>${field('a_t','Título',1)}${field('a_l','Frase abaixo do título',2)}<p class="lb" style="margin-top:14px">Selos (as pílulas pequenas)</p>${['s1','s2','s3','s4'].map((k,i)=>field(k,'Selo '+(i+1),1)).join('')}</div>
- <div class="card"><h3>Agendamento</h3>${field('b_l','Texto acima do calendário',2)}</div>`}
-function drawTX(){const op=[...document.querySelectorAll('#tx details')].map(d=>d.open);
- $('#tx').innerHTML=G.map(([g,ks])=>`<details class="card"><summary>${g}</summary>${ks.map(([k,l])=>field(k,l,(DT[lang][k]||'').length>90?4:2)).join('')}</details>`).join('');
- document.querySelectorAll('#tx details').forEach((d,i)=>d.open=!!op[i])}
-function drawMet(){const op=[...document.querySelectorAll('#met details')].map(d=>d.open);
- $('#met').innerHTML=`<div class="card"><h3>Títulos da seção</h3>${field('m_t','Título',1)}${field('m_big','Frase de destaque',2)}${field('m_l','Texto de apoio',3)}</div>`
- +ML.map((m,i)=>`<details class="card mblk" data-i="${i}"><summary><b>Bloco ${i+1}</b> · ${esc(plain(m[lang][0])||'(sem título)')}</summary>
-  <div class="mh"><label style="margin:0">Ícone</label><select data-ic="${i}">${ICN.map(([v,n])=>`<option value="${v}"${v===m.ic?' selected':''}>${n}</option>`).join('')}</select>
-  <button type="button" class="btn g" data-up="${i}" aria-label="Subir"${i?'':' disabled'}>↑</button><button type="button" class="btn g" data-dn="${i}" aria-label="Descer"${i<ML.length-1?'':' disabled'}>↓</button><button type="button" class="btn g" data-del="${i}">Remover</button></div>
-  <label>Título do bloco</label>${rt(`data-ml="${i}.0"`,m[lang][0],1)}<label>Texto do bloco</label>${rt(`data-ml="${i}.1"`,m[lang][1],3)}</details>`).join('')
- +`<button type="button" class="btn g add" id="madd">+ Adicionar bloco</button><button type="button" class="btn g" id="mres" style="margin-top:6px">Voltar aos blocos originais</button>`;
- document.querySelectorAll('#met details').forEach((d,i)=>d.open=!!op[i]);
- const ch=()=>{md=true;bar();drawMet()};
- $('#madd').onclick=()=>{ML.push({ic:ICN[ML.length%ICN.length][0],pt:['',''],en:['','']});md=true;bar();drawMet();const d=document.querySelectorAll('#met details');const l=d[d.length-1];if(l){l.open=true;l.scrollIntoView({behavior:'smooth',block:'center'})}};
- $('#mres').onclick=async()=>{if(!confirm('Voltar aos 7 blocos originais do método?'))return;MS=null;md=false;await remove(ref(db,'kamila/method'));ML=defML();bar();drawMet();toast('Blocos originais restaurados')};
- document.querySelectorAll('[data-ic]').forEach(x=>x.onchange=()=>{ML[+x.dataset.ic].ic=x.value;md=true;bar()});
- document.querySelectorAll('[data-up]').forEach(x=>x.onclick=()=>{const i=+x.dataset.up;[ML[i-1],ML[i]]=[ML[i],ML[i-1]];ch()});
- document.querySelectorAll('[data-dn]').forEach(x=>x.onclick=()=>{const i=+x.dataset.dn;[ML[i+1],ML[i]]=[ML[i],ML[i+1]];ch()});
- document.querySelectorAll('[data-del]').forEach(x=>x.onclick=()=>{const i=+x.dataset.del;if(!confirm('Remover o bloco '+(i+1)+'?'))return;ML.splice(i,1);ch()})}
-function drawText(){drawAB();drawInfo();drawMet();if(ADV)drawTX()}
-function show(t){tab=t;document.querySelectorAll('#tabs .chip').forEach(c=>c.classList.toggle('on',c.dataset.t===t));['fotos','precos','metodo','info','adv'].forEach(x=>{const e=$('#p-'+x);if(e)e.hidden=x!==t});$('#tb').hidden=t==='precos';scrollTo({top:0})}
+const AI=['plane','home','brief','spark'],MI=['chat','heart','pin','target','book','pen','layers'];
+const two=(f)=>({pt:f('pt'),en:f('en')});
+const DEF={
+ badges:()=>['s1','s2','s3','s4'].map(k=>two(l=>base(l,k))),
+ about:()=>[1,2,3,4,5,6].map(i=>({id:'p'+i,...two(l=>base(l,'ab'+i))})),
+ aud:()=>AI.map((ic,i)=>({ic,...two(l=>[1,2,3].map(j=>base(l,'a_'+i+'_'+j)))})),
+ met:()=>MI.map((ic,i)=>({ic,...two(l=>[1,2].map(j=>base(l,'m_'+i+'_'+j)))})),
+ how:()=>[0,1,2,3,4].map(i=>two(l=>[0,1].map(j=>base(l,'h_'+i+'_'+j))))};
+const nid=()=>{let m=0;[...LS.about.map(x=>x.id),...RMP,...Object.keys(P)].forEach(k=>{const n=+String(k).replace(/\D/g,'');if(n>m)m=n});return 'p'+(m+1)};
+const SPEC={
+ badges:{noun:'Selo',host:'#l-badges',scalar:1,rows:[['Texto',1]],mk:()=>({pt:'',en:''})},
+ about:{noun:'Bloco',host:'#l-about',scalar:1,photo:1,open:1,rows:[['Texto ao lado da foto',5]],mk:()=>({id:nid(),pt:'',en:''})},
+ aud:{noun:'Card',host:'#l-aud',icon:1,rows:[['Título',1],['Descrição curta',2],['Texto que aparece ao tocar no card',2]],mk:()=>({ic:AI[LS.aud.length%AI.length],pt:['','',''],en:['','','']})},
+ met:{noun:'Bloco',host:'#l-met',icon:1,rows:[['Título',1],['Texto',3]],mk:()=>({ic:MI[LS.met.length%MI.length],pt:['',''],en:['','']})},
+ how:{noun:'Passo',host:'#l-how',rows:[['Título',1],['Texto',2]],mk:()=>({pt:['',''],en:['','']})}};
+const firstTxt=(sp,it)=>plain(sp.scalar?it.pt:it.pt[0])||'(sem título)';
+function drawList(n){const sp=SPEC[n],host=$(sp.host);if(!host)return;
+ const op=[...host.querySelectorAll('details')].map(d=>d.open),had=op.length;
+ host.innerHTML=LS[n].map((it,i)=>{const u=sp.photo?P[it.id]:null;
+  return `<details class="card lblk"${(had?op[i]:sp.open)?' open':''}><summary><b>${sp.noun} ${i+1}</b> · ${esc(firstTxt(sp,it))}</summary>
+  <div class="mh">${sp.icon?`<label style="margin:0">Ícone</label><select data-act="ic" data-n="${n}" data-i="${i}">${ICN.map(([v,nm])=>`<option value="${v}"${v===it.ic?' selected':''}>${nm}</option>`).join('')}</select>`:''}
+  <button type="button" class="btn g" data-act="up" data-n="${n}" data-i="${i}" aria-label="Subir"${i?'':' disabled'}>↑</button><button type="button" class="btn g" data-act="dn" data-n="${n}" data-i="${i}" aria-label="Descer"${i<LS[n].length-1?'':' disabled'}>↓</button><button type="button" class="btn g" data-act="del" data-n="${n}" data-i="${i}">Remover</button></div>
+  ${sp.photo?`<button class="ph ${u?'has':'empty'}" data-u="${it.id}" style="${u?`background-image:url(${u})`:''}" aria-label="Trocar foto">${u?'<span>Trocar foto</span>':'+ Adicionar foto'}</button>${u?`<button type="button" class="btn g" data-act="rph" data-id="${it.id}">Remover foto</button>`:''}`:''}
+  ${sp.rows.map(([lab,rows],j)=>`<label>${lab}</label>${pairOf(l=>`data-li="${n}.${i}.${sp.scalar?'x':j}" data-l="${l}"`,l=>sp.scalar?it[l]:it[l][j],rows)}`).join('')}</details>`}).join('')
+ +`<button type="button" class="btn g add" data-act="add" data-n="${n}">+ Adicionar ${sp.noun.toLowerCase()}</button><button type="button" class="btn g" data-act="reset" data-n="${n}">Voltar ao original</button>`;
+ if(sp.photo&&!$('#pick')){document.body.insertAdjacentHTML('beforeend','<input type="file" accept="image/*" id="pick" hidden>');$('#pick').onchange=e=>{const f=e.target.files[0],k=$('#pick').dataset.k;e.target.value='';if(f)shrink(f,k)}}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b){const a=b.dataset.act,n=b.dataset.n,i=+b.dataset.i;
+  if(a==='add'){LS[n].push(SPEC[n].mk());ld=true;bar();drawList(n);const d=document.querySelectorAll(SPEC[n].host+' details'),l=d[d.length-1];if(l){l.open=true;l.scrollIntoView({behavior:'smooth',block:'center'})}}
+  else if(a==='up'||a==='dn'){const j=a==='up'?i-1:i+1;[LS[n][j],LS[n][i]]=[LS[n][i],LS[n][j]];ld=true;bar();drawList(n)}
+  else if(a==='del'){if(!confirm('Remover este item?'))return;const it=LS[n].splice(i,1)[0];if(n==='about'&&it.id)RMP.push(it.id);ld=true;bar();drawList(n)}
+  else if(a==='reset'){if(!confirm('Voltar ao conteúdo original desta lista?'))return;LS[n]=DEF[n]();ld=true;bar();drawList(n)}
+  else if(a==='rph'){if(confirm('Remover esta foto?'))rawRemove(ref(db,'kamila/photos/'+b.dataset.id)).catch(()=>toast('Não consegui remover a foto.'))}
+  return}
+ const u=e.target.closest('[data-u]');if(u){$('#pick').dataset.k=u.dataset.u;$('#pick').click()}});
+document.addEventListener('change',e=>{const s=e.target.closest('[data-act=ic]');if(s){LS[s.dataset.n][+s.dataset.i].ic=s.value;ld=true;bar()}});
+// ---- campos de texto simples (valem para PT e EN) ----
+const G={inicio:[['tag','Etiqueta no topo',1],['h1','Título principal',2],['sub','Frase abaixo do título',3],['cta1','Botão principal',1],['b_t','Título da seção de agendamento',1],['b_l','Texto acima do calendário',2],['cal_note','Nota abaixo do calendário',2]],
+ sobre:[['a_t','Título',1],['a_l','Frase abaixo do título',2]],
+ aulas:[['c_t','Título da seção',1],['c_l','Texto de apoio',2]],
+ metodo:[['m_t','Título da seção',1],['m_big','Frase de destaque',2],['m_l','Texto de apoio',4]],
+ como:[['h_t','Título da seção',1],['cta2','Botão final',1]],
+ precos:[['p_t','Título da seção',1],['p_a','Texto acima do preço',2,'Mantenha {pk} (nº de aulas) onde aparece: o site troca pelo valor.'],['p_b','Texto abaixo do preço',3,'Mantenha {pl} (preço por aula) e {pk} onde aparecem.'],['p_free','Card “aula grátis” — título',1],['p_freed','Card “aula grátis” — texto',2],['p_wise','Card Wise — texto',3]]};
+function drawSimple(){for(const g in G){const h=$('#s-'+g);if(h)h.innerHTML=`<div class="card">${G[g].map(([k,l,r,hint])=>field(k,l,r,hint)).join('')}</div>`}}
+function startLS(){const pick=(SV.t&&SV.s)?(SV.t.t>=SV.s.t?SV.t:SV.s):(SV.t||SV.s);for(const n in SPEC)LS[n]=(pick&&Array.isArray(pick[n]))?cl(pick[n]):DEF[n]()}
+function drawAll(){drawSimple();for(const n in SPEC)drawList(n)}
+function show(t){document.querySelectorAll('#tabs .chip').forEach(c=>c.classList.toggle('on',c.dataset.t===t));['inicio','sobre','aulas','metodo','como','precos'].forEach(x=>$('#p-'+x).hidden=x!==t);scrollTo({top:0})}
 $('#tabs').onclick=e=>{const b=e.target.closest('[data-t]');if(b)show(b.dataset.t)};
-$('#lang').onclick=e=>{const b=e.target.closest('[data-l]');if(!b)return;lang=b.dataset.l;document.querySelectorAll('#lang .chip').forEach(c=>c.classList.toggle('on',c===b));drawText()};
-document.addEventListener('input',e=>{const t=e.target.closest&&e.target.closest('.rt');if(!t)return;const v=pack(t);
- if(t.dataset.ml!==undefined){const[i,j]=t.dataset.ml.split('.').map(Number);ML[i][lang][j]=v;md=true;bar();return}
- const k=t.dataset.k;if(v===base(lang,k))delete DR[lang][k];else DR[lang][k]=v;
- document.querySelectorAll(`.rt[data-k="${k}"]`).forEach(x=>{if(x!==t)x.innerHTML=toHtml(v)});bar()});
-// preços
+document.addEventListener('input',e=>{const t=e.target.closest&&e.target.closest('.rt');if(!t)return;const v=pack(t),l=t.dataset.l;
+ if(t.dataset.li){const[n,i,j]=t.dataset.li.split('.'),it=LS[n][+i];if(j==='x')it[l]=v;else it[l][+j]=v;ld=true;bar();if(l==='pt'&&(j==='x'||j==='0')){const sm=t.closest('details').querySelector('summary b'),sp=SPEC[n];if(sm)sm.parentNode.lastChild.textContent=' · '+(plain(v)||'(sem título)')}return}
+ const k=t.dataset.k;if(v===base(l,k))delete DR[l][k];else DR[l][k]=v;bar()});
+// ---- preços ----
 const per=()=>$('#per').textContent='= €'+(+(S.price/S.pkg).toFixed(2))+' por aula'+(S.brl?' · R$ '+(+(S.brl/S.pkg).toFixed(2))+' por aula':'');
 function drawS(){if(!pd){$('#price').value=S.price;$('#pkg').value=S.pkg;$('#brl').value=S.brl||'';if(document.activeElement!==$('#cu'))$('#cu').value=S.calUrl||''}per()}
 [['price','price',x=>+x],['pkg','pkg',x=>Math.max(1,+x||1)],['brl','brl',x=>+x||0]].forEach(([id,k,f])=>$('#'+id).oninput=e=>{S[k]=f(e.target.value);pd=true;per();bar()});
 $('#cu').oninput=()=>{pd=true;bar()};
-onValue(ref(db,'kamila/settings/site'),s=>{if(s.exists())S={...S,...s.val()};drawS()});
-// salvar / descartar
+const parseL=v=>{try{const o=JSON.parse(v);return o&&o.t?o:null}catch(_){return null}};
+onValue(ref(db,'kamila/settings/site'),s=>{if(s.exists()){const v=s.val();S={...S,...v};SV.s=parseL(v._lists)}if(!ld&&!editing()){startLS();drawAll()}drawS()});
+// ---- salvar / descartar ----
+async function writeLists(str){const paths=['kamila/texts/pt/_lists','kamila/settings/site/_lists'];let last;
+ for(const pth of paths){try{await rawSet(ref(db,pth),str);return}catch(e){last=e;if(!isPerm(e))throw e}}throw last}
 $('#save').onclick=async()=>{const b=$('#save');b.disabled=true;try{
   const u={};for(const l of['pt','en'])for(const k in DR[l]){const v=DR[l][k].trim();u[l+'/'+k]=(!v||v===DT[l][k])?null:v}
   if(Object.keys(u).length)await update(ref(db,'kamila/texts'),u);
-  if(md)await set(ref(db,'kamila/method'),{n:ML.length,list:ML});
-  if(pd)await set(ref(db,'kamila/settings/site'),{price:S.price,pkg:S.pkg,brl:S.brl||0,calUrl:$('#cu').value.trim()});
-  DR={pt:{},en:{}};pd=false;if(md){MS=cl(ML);md=false}bar();drawText();toast('Salvo ✦ O site já foi atualizado.')}catch(e){}b.disabled=false};
-$('#dis').onclick=()=>{if(!confirm('Descartar as alterações não salvas?'))return;DR={pt:{},en:{}};pd=false;md=false;ML=mlStart();S={...S};drawS();drawText();bar()};
+  if(ld){try{await writeLists(JSON.stringify({v:1,t:Date.now(),...Object.fromEntries(Object.keys(SPEC).map(n=>[n,LS[n]]))}))}catch(e){toast(isPerm(e)?'Não salvou os blocos: faltam as regras do banco para esta área. Veja as instruções que enviei.':'Erro ao salvar: '+(e.code||e.message));throw e}
+   for(const id of RMP){try{await rawRemove(ref(db,'kamila/photos/'+id))}catch(_){}}RMP=[]}
+  if(pd)await update(ref(db,'kamila/settings/site'),{price:S.price,pkg:S.pkg,brl:S.brl||0,calUrl:$('#cu').value.trim()});
+  DR={pt:{},en:{}};pd=false;ld=false;bar();toast('Salvo ✦ O site já foi atualizado.')}catch(e){}b.disabled=false};
+$('#dis').onclick=()=>{if(!confirm('Descartar as alterações não salvas?'))return;DR={pt:{},en:{}};pd=false;ld=false;RMP=[];S={...S};startLS();drawS();drawAll();bar()};
 addEventListener('beforeunload',e=>{if(isDirty()){e.preventDefault();e.returnValue=''}});
-// fotos: reduzidas para JPEG e guardadas no próprio banco (sem Storage)
+// ---- fotos: reduzidas para JPEG e guardadas no próprio banco ----
 function shrink(f,k){const card=document.querySelector(`[data-u="${k}"]`);card&&card.classList.add('up');const im=new Image();im.onload=async()=>{try{const r=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*r;c.height=im.height*r;c.getContext('2d').drawImage(im,0,0,c.width,c.height);await set(ref(db,'kamila/photos/'+k),{data:c.toDataURL('image/jpeg',.72)});toast('Foto atualizada ✦')}catch(e){card&&card.classList.remove('up')}};im.onerror=()=>{card&&card.classList.remove('up');toast('Não consegui abrir essa foto. Tente outra.')};im.src=URL.createObjectURL(f)}
-onValue(ref(db,'kamila/photos'),s=>{for(let i=1;i<=6;i++)delete P['p'+i];const v=s.val()||{};for(const k in v)P[k]=v[k].data;if(!editing())drawAB();else document.querySelectorAll('.ph').forEach(b=>{const u=P[b.dataset.u];b.style.backgroundImage=u?`url(${u})`:'';b.classList.toggle('has',!!u);b.classList.toggle('empty',!u);b.classList.remove('up');b.innerHTML=u?'<span>Trocar foto</span>':'+ Adicionar foto'})});
-onValue(ref(db,'kamila/texts'),s=>{TX=s.val()||{};if(editing())return;if(!md)ML=mlStart();drawText()});
-onValue(ref(db,'kamila/method'),s=>{MS=normML(s.val());if(!md){ML=mlStart();if(!editing())drawMet()}});
-$('#txr').onclick=async()=>{if(!confirm('Voltar TODOS os textos ao original?'))return;await set(ref(db,'kamila/texts'),null);TX={};DR={pt:{},en:{}};if(!md)ML=mlStart();drawText();bar();toast('Textos restaurados')};
-ML=mlStart();drawS();drawText();
+onValue(ref(db,'kamila/photos'),s=>{for(const k in P)delete P[k];const v=s.val()||{};for(const k in v)P[k]=v[k].data;
+ document.querySelectorAll('.ph[data-u]').forEach(b=>{const u=P[b.dataset.u];b.style.backgroundImage=u?`url(${u})`:'';b.classList.toggle('has',!!u);b.classList.toggle('empty',!u);b.classList.remove('up');b.innerHTML=u?'<span>Trocar foto</span>':'+ Adicionar foto'})});
+onValue(ref(db,'kamila/texts'),s=>{TX=s.val()||{};SV.t=parseL(TX.pt&&TX.pt._lists);if(editing())return;if(!ld)startLS();drawAll()});
+startLS();drawS();drawAll();
 </script></body></html>
