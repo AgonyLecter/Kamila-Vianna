@@ -28,6 +28,7 @@ h2{font-size:clamp(34px,9vw,56px);margin-bottom:12px}
 h3{font-size:21px;letter-spacing:-.02em}
 section{padding:72px 20px;max-width:960px;margin:auto;position:relative}
 .lead{color:var(--mute);max-width:46ch;margin-bottom:28px}
+#method .lead,#classes .lead,#about .lead,#how-sec .lead{max-width:none}
 .holo{background:var(--holo);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:sh 8s linear infinite alternate}
 @keyframes sh{to{background-position:100% 0}}
 /* nav */
@@ -97,7 +98,7 @@ nav{display:none;gap:18px}nav a{color:var(--ink);text-decoration:none;font-weigh
 .soc{display:flex;gap:12px;justify-content:center;margin:16px 0}.soc a{width:50px;height:50px;border-radius:18px 18px 18px 6px;display:grid;place-items:center;border:1px solid var(--line);background:var(--card)}.soc svg{width:26px;height:26px;fill:none;stroke:url(#g);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .rg{display:block}
 .card p,.card .cp{color:var(--mute);font-size:15px;margin-top:6px}
-.rtx b,.rtx strong{font-weight:800}.rtx u{text-decoration-thickness:2px;text-underline-offset:3px}.rtx div[style*=justify]{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.rtx b,.rtx strong{font-weight:800}.rtx u{text-decoration-thickness:2px;text-underline-offset:3px}.rtx div[style*=justify],[data-i] div[style*=justify]{text-align:justify;hyphens:auto;-webkit-hyphens:auto}[data-i] b{font-weight:800}
 .big{font:800 clamp(30px,8vw,52px)/1 var(--d);letter-spacing:-.04em;margin:8px 0 22px}
 .aud button{all:unset;display:block;width:100%;cursor:pointer}
 .aud .card{transition:transform .3s,box-shadow .3s}
@@ -261,7 +262,7 @@ body.lock{overflow:hidden}
   <h2 data-i="a_t"></h2>
   <p class="lead" data-i="a_l"></p>
   <div id="zz"></div>
-  <div class="stats" style="margin-top:20px"><b data-i="s1"></b><b data-i="s2"></b><b data-i="s3"></b><b data-i="s4"></b></div>
+  <div class="stats" id="stats" style="margin-top:20px"></div>
 </section>
 
 <section id="classes">
@@ -368,7 +369,7 @@ Object.assign(T.en,{rmore:'Read More',sclose:'Close',cal_note:'You’ll get a co
 const T0=JSON.parse(JSON.stringify(T));
 function applyTexts(o){for(const l of ['pt','en']){T[l]=JSON.parse(JSON.stringify(T0[l]));const v=(o&&o[l])||{};for(const k in v){const m=k.match(/^([amh])_(\d+)_(\d+)$/);if(m){const r=T[l][m[1]][+m[2]];if(r)r[+m[3]]=v[k]}else T[l][k]=v[k]}}}
 const DEFAULTS={price:100,pkg:4,brl:650,calUrl:'https://calendar.google.com/calendar/appointments/schedules/AcZssZ390iuq4waR1rO5Hsn7bBhao7zSAP5ZBqzWi9eZVX8FUXdDP_nlb8qUfLwHquapJYPhrDFsUvRS'};
-let S={...DEFAULTS},methodList=null,photos={},navUsed=false,calShown='';
+let S={...DEFAULTS},LST=null,LSRC={t:null,s:null},photos={},navUsed=false,calShown='';
 const BRL=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(n);
 const calSrc=u=>{const m=String(u||'').match(/schedules\/([^\/?#]+)/);return m?'https://calendar.google.com/calendar/appointments/schedules/'+m[1]+'?gv=true':''};
 const NAV=[['about','heart','n_about'],['classes','plane','n_classes'],['method','chat','n_method'],['how','pin','nav_how'],['pricing','euro','p_t'],['booking','spark','n_booking']];
@@ -388,13 +389,19 @@ function clean(html){const d=new DOMParser().parseFromString('<body>'+html,'text
   o+=`<${t}${a}>${out(c)}</${t}>`}});return o};return out(d)}
 const looksHtml=v=>/<(b|i|u|br|div)[\s>\/]/i.test(v);
 const R=v=>{v=String(v??'');return looksHtml(v)?clean(v):esc(v).replace(/>/g,'&gt;').replace(/\n/g,'<br>')};
-function blk(i){const t=T[L];return `<div class="zz ${i%2?'zl':'zr'}${i===6?' last':''}"><div class="zt"><div class="rtx">${R(t['ab'+i]||'')}</div></div><figure class="fig" data-p="p${i}"></figure></div>`}
-function drawAbout(){const t=T[L];
- $('#zz').innerHTML=blk(1)+`<div style="text-align:center"><button type="button" class="btn zbtn" id="zbtn" aria-haspopup="dialog">${t.rmore}</button></div>`;
- $('#zbtn').onclick=openStory;
+const parseL=v=>{try{const o=JSON.parse(v);return o&&o.t?o:null}catch(_){return null}};
+function setLST(){const a=LSRC.t,b=LSRC.s;LST=a&&b?(a.t>=b.t?a:b):(a||b)}
+// item de lista: texto no idioma atual, com o português como reserva
+const pickT=(x,j)=>{const g=v=>j===undefined?v:(v||[])[j];return g(x[L])||g(x.pt)||''};
+const lst=n=>LST&&Array.isArray(LST[n])?LST[n]:null;
+function aboutItems(){const l=lst('about'),t=T[L];return l?l.map(x=>({id:x.id,text:pickT(x)})):[1,2,3,4,5,6].map(i=>({id:'p'+i,text:t['ab'+i]||''}))}
+function blk(it,i,n){return `<div class="zz ${i%2?'zr':'zl'}${i===n-1?' last':''}"><div class="zt"><div class="rtx">${R(it.text)}</div></div><figure class="fig" data-p="${it.id}"></figure></div>`}
+function drawAbout(){const t=T[L],a=aboutItems();
+ $('#zz').innerHTML=(a.length?blk(a[0],0,a.length):'')+(a.length>1?`<div style="text-align:center"><button type="button" class="btn zbtn" id="zbtn" aria-haspopup="dialog">${t.rmore}</button></div>`:'');
+ if($('#zbtn'))$('#zbtn').onclick=openStory;
  if($('#story').classList.contains('on'))drawStory();
  applyPh();tilt()}
-function drawStory(){$('#zs').innerHTML=[1,2,3,4,5,6].map(blk).join('');applyPh();tilt()}
+function drawStory(){const a=aboutItems();$('#zs').innerHTML=a.map((it,i)=>blk(it,i,a.length)).join('');applyPh();tilt()}
 let stBack;
 function openStory(e){const st=$('#story');if(st.classList.contains('on'))return;stBack=e&&e.currentTarget;drawStory();st.classList.remove('out');st.classList.add('on');st.setAttribute('aria-hidden','false');st.scrollTop=0;document.body.classList.add('lock');
  try{history.pushState({story:1},'')}catch(_){}
@@ -416,11 +423,12 @@ function render(){
  $('#pp').textContent='€'+S.price;$('#pbrl').textContent=S.brl?'≈ '+BRL(S.brl)+' · '+BRL(S.brl/S.pkg)+' '+t.perl:'';
  const ic=n=>`<span class="ic"><svg><use href="#i-${n}"/></svg></span>`;
  drawNav();
- const ML=methodList?methodList.map(x=>[x.ic,(x[L]&&x[L][0])||(x.pt&&x.pt[0])||'',(x[L]&&x[L][1])||(x.pt&&x.pt[1])||'']):t.m;
+ const ML=lst('met')?lst('met').map(x=>[x.ic,pickT(x,0),pickT(x,1)]):t.m,AL=lst('aud')?lst('aud').map(x=>[x.ic,pickT(x,0),pickT(x,1),pickT(x,2)]):t.a,HL=lst('how')?lst('how').map(x=>[pickT(x,0),pickT(x,1)]):t.h,BL=lst('badges')?lst('badges').map(x=>pickT(x)):[t.s1,t.s2,t.s3,t.s4];
+ $('#stats').innerHTML=BL.map(b=>`<b>${R(b)}</b>`).join('');
  $('#mg').innerHTML=ML.map(m=>`<div class="card">${ic(m[0])}<h3>${R(m[1])}</h3><div class="rtx cp">${R(m[2])}</div></div>`).join('');
- $('#ag').innerHTML=t.a.map(a=>`<button><div class="card">${ic(a[0])}<h3>${R(a[1])}</h3><div class="rtx cp">${R(a[2])}</div><div class="more">✦ ${R(a[3])}</div></div></button>`).join('');
+ $('#ag').innerHTML=AL.map(a=>`<button><div class="card">${ic(a[0])}<h3>${R(a[1])}</h3><div class="rtx cp">${R(a[2])}</div><div class="more">✦ ${R(a[3])}</div></div></button>`).join('');
  $$('.aud button').forEach(b=>b.onclick=()=>{const c=b.firstChild,o=c.classList.contains('on');$$('.aud .card').forEach(x=>x.classList.remove('on'));if(!o){c.classList.add('on');burst(c)}});
- $('#tl').innerHTML=t.h.map((h,i)=>`<li><span class="n">${i+1}</span><div><h3>${R(h[0])}</h3><div class="rtx cp">${R(h[1])}</div></div></li>`).join('');
+ $('#tl').innerHTML=HL.map((h,i)=>`<li><span class="n">${i+1}</span><div><h3>${R(h[0])}</h3><div class="rtx cp">${R(h[1])}</div></div></li>`).join('');
  drawAbout();
  const src=calSrc(S.calUrl);if(src&&src!==calShown){$('.calload').classList.remove('off');$('#cal').onload=()=>$('.calload').classList.add('off');$('#cal').src=src;calShown=src}
  reveal();
@@ -439,9 +447,8 @@ setInterval(()=>{if(navUsed)return;const c=$$('.bub');if(!c.length)return;const 
 render();
 // Firebase (só preço, fotos e textos) carrega depois: o site nunca fica em branco
 (async()=>{try{const c=await import('./firebase-config.js'),{ref,onValue}=await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js');
- onValue(ref(c.db,'kamila/settings/site'),s=>{if(s.exists())S={...DEFAULTS,...s.val()};render()});
- onValue(ref(c.db,'kamila/texts'),s=>{applyTexts(s.val());render()});
- onValue(ref(c.db,'kamila/method'),s=>{const v=s.val();methodList=v?(v.n===0?[]:(Array.isArray(v.list)?v.list:Object.values(v.list||{}))):null;render()});
+ onValue(ref(c.db,'kamila/settings/site'),s=>{if(s.exists()){const v=s.val();S={...DEFAULTS,...v};LSRC.s=parseL(v._lists)}else LSRC.s=null;setLST();render()});
+ onValue(ref(c.db,'kamila/texts'),s=>{const v=s.val();applyTexts(v);LSRC.t=parseL(v&&v.pt&&v.pt._lists);setLST();render()});
  onValue(ref(c.db,'kamila/photos'),s=>{photos={};const v=s.val()||{};for(const k in v)photos[k]=v[k].data;applyPh()})}catch(e){console.warn('Firebase offline',e)}})();
 </script>
 </body>
