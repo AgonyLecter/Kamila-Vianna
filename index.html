@@ -210,14 +210,14 @@ dialog{margin:auto}
 @keyframes pulse{50%{box-shadow:0 8px 34px -4px var(--pink)}}
 .zz.last{margin-bottom:0}
 body.lock{overflow:hidden}
-#story{position:fixed;inset:0;z-index:80;background:var(--bg);display:none;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 16px calc(40px + env(safe-area-inset-bottom,0px))}
+#story{position:fixed;inset:0;z-index:80;background:var(--bg);display:none;overflow-y:auto;overflow-x:hidden;touch-action:pan-y;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 16px calc(40px + env(safe-area-inset-bottom,0px))}
 #story.on{display:block;animation:stIn .55s cubic-bezier(.2,.8,.2,1) both}
 #story.out{display:block;animation:stOut .35s ease both}
 @keyframes stIn{from{opacity:0;transform:translateY(40px) scale(.98)}to{opacity:1;transform:none}}
 @keyframes stOut{to{opacity:0;transform:translateY(30px) scale(.98)}}
 .sthead{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:680px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top,0px)) 0 14px;background:linear-gradient(var(--bg) 70%,transparent)}
 .sthead h2{margin:0}
-#story .stwrap{max-width:680px;margin:0 auto;padding-top:6px}
+#story .stwrap{overflow-x:clip;max-width:680px;margin:0 auto;padding-top:6px}
 #story #zs{margin-top:6px}
 .stfoot{text-align:center;margin-top:34px}
 @media(min-width:760px){.zt p{font-size:18px}.zt{padding:28px 30px 30px}.zz{margin-bottom:48px}}
