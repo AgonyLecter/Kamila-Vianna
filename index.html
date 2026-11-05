@@ -228,7 +228,7 @@ body.lock{overflow:hidden}
 <header>
   <a class="logo" href="#home">KAMILA <i>✦</i> VIANNA</a>
   <nav>
-    <a href="#home" data-i="n_home"></a><a href="#about" data-i="n_about"></a><a href="#method" data-i="n_method"></a><a href="#classes" data-i="n_classes"></a><a href="#booking" data-i="n_booking"></a>
+    <a href="#home" data-i="n_home"></a><a href="#about" data-i="n_about"></a><a href="#classes" data-i="n_classes"></a><a href="#method" data-i="n_method"></a><a href="#booking" data-i="n_booking"></a>
   </nav>
   <div class="tools">
     <button class="pill" id="lang" aria-label="Language">PT | EN</button>
@@ -242,7 +242,7 @@ body.lock{overflow:hidden}
 </div>
 <div id="sheet">
   <button class="pill x" id="cl">✕</button>
-  <a href="#home" data-i="n_home"></a><a href="#about" data-i="n_about"></a><a href="#method" data-i="n_method"></a><a href="#classes" data-i="n_classes"></a><a href="#booking" data-i="n_booking"></a>
+  <a href="#home" data-i="n_home"></a><a href="#about" data-i="n_about"></a><a href="#classes" data-i="n_classes"></a><a href="#method" data-i="n_method"></a><a href="#booking" data-i="n_booking"></a>
 </div>
 
 <section id="home">
@@ -263,6 +263,12 @@ body.lock{overflow:hidden}
   <div class="stats" style="margin-top:20px"><b data-i="s1"></b><b data-i="s2"></b><b data-i="s3"></b><b data-i="s4"></b></div>
 </section>
 
+<section id="classes">
+  <h2 data-i="c_t"></h2>
+  <p class="lead" data-i="c_l"></p>
+  <div class="grid aud" id="ag"></div>
+</section>
+
 <section id="method">
   <h2 data-i="m_t"></h2>
   <p class="big holo" data-i="m_big"></p>
@@ -270,12 +276,8 @@ body.lock{overflow:hidden}
   <div class="grid" id="mg"></div>
 </section>
 
-<section id="classes">
-  <h2 data-i="c_t"></h2>
-  <p class="lead" data-i="c_l"></p>
-  <div class="grid aud" id="ag"></div>
-
-  <h2 id="how" style="margin-top:70px" data-i="h_t"></h2>
+<section id="how-sec">
+  <h2 id="how" data-i="h_t"></h2>
   <ol class="tl" id="tl"></ol>
   <a class="btn" href="#booking" data-i="cta2"></a>
 </section>
@@ -368,7 +370,7 @@ const DEFAULTS={price:100,pkg:4,brl:650,calUrl:'https://calendar.google.com/cale
 let S={...DEFAULTS},photos={},navUsed=false,calShown='';
 const BRL=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(n);
 const calSrc=u=>{const m=String(u||'').match(/schedules\/([^\/?#]+)/);return m?'https://calendar.google.com/calendar/appointments/schedules/'+m[1]+'?gv=true':''};
-const NAV=[['about','heart','n_about'],['method','chat','n_method'],['classes','plane','n_classes'],['how','pin','nav_how'],['pricing','euro','p_t'],['booking','spark','n_booking']];
+const NAV=[['about','heart','n_about'],['classes','plane','n_classes'],['method','chat','n_method'],['how','pin','nav_how'],['pricing','euro','p_t'],['booking','spark','n_booking']];
 const seen=new Set();let io;
 function reveal(){if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');seen.add(e.target.dataset.rk);io.unobserve(e.target)}}),{threshold:.12});
  const c={};$$('#mg .card,#ag .card,.price,#pricing .grid .card,.tl li,.zz .fig,.zz .zt,.calwrap,.stats b').forEach(el=>{el.classList.add('rv');const sid=(el.closest('section')||{}).id||'x';c[sid]=(c[sid]||0)+1;const k=sid+c[sid];el.dataset.rk=k;el.style.setProperty('--dl',(c[sid]%4)*.09+'s');if(el.classList.contains('in'))return;if(seen.has(k)&&!el.closest('#story'))el.classList.add('in','nt');else io.observe(el)})}
